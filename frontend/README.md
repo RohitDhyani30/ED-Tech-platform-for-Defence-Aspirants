@@ -1,16 +1,40 @@
-# React + Vite
+# ED-Tech Platform for Defence Aspirants
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An educational web platform designed for students preparing for Defence examinations such as NDA, CDS , SSB.
 
-Currently, two official plugins are available:
+## Objective
+The aim of this platform is to provide a centralized digital learning environment where defence aspirants can access:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Mock Tests
+- Subject-wise Notes
+- Previous Year Papers
+- Performance Tracking
 
-## React Compiler
+## Planned Features
+- Student Registration & Login
+- Dashboard for Exam Preparation
+- Daily Quiz Section
+- Mock Test Generator
+- Admin Content Upload Panel
+- Result Analytics
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Proposed Technology Stack
+### Frontend
+- HTML
+- CSS
+- JavaScript
+- React.js
 
-## Expanding the ESLint configuration
+### Backend
+- Java Spring Boot
+- REST APIs
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Database
+- POSTGRESQL
+
+## Current Development Status
+Initial planning and requirement gathering phase completed.
+Project folder structure and technology stack finalized.
+
+## Future Scope
+Backend development and API integration will begin in the next phase.
