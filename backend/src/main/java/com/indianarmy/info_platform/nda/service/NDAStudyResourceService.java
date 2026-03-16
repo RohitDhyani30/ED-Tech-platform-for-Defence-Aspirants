@@ -41,4 +41,8 @@ public class NDAStudyResourceService {
         repository.deleteById(id);
     }
 
+    public List<NDAStudyResource> getBySubject(Long subjectId) {
+        return repository.findBySubjectId(subjectId);
+    }
+
 }

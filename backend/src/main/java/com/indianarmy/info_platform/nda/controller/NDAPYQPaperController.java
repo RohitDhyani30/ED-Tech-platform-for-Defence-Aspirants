@@ -26,4 +26,16 @@ public class NDAPYQPaperController {
     public NDAPYQPaper create(@RequestBody NDAPYQPaper paper) {
         return service.create(paper);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
+    @GetMapping("/year/{year}")
+    public List<NDAPYQPaper> getByYear(@PathVariable Integer year) {
+        return service.getByYear(year);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
+    @GetMapping("/subject/{subjectId}")
+    public List<NDAPYQPaper> getBySubject(@PathVariable Long subjectId) {
+        return service.getBySubject(subjectId);
+    }
 }

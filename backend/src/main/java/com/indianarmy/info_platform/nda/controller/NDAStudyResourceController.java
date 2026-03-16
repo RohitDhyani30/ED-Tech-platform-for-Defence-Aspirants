@@ -40,4 +40,10 @@ public class NDAStudyResourceController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
+    @GetMapping("/subject/{subjectId}")
+    public List<NDAStudyResource> getBySubject(@PathVariable Long subjectId) {
+        return service.getBySubject(subjectId);
+    }
 }

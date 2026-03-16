@@ -22,4 +22,12 @@ public class NDAPYQPaperService {
         return repository.save(paper);
     }
 
+    public List<NDAPYQPaper> getByYear(Integer year) {
+        return repository.findByYear(year);
+    }
+
+    public List<NDAPYQPaper> getBySubject(Long subjectId) {
+        return repository.findBySubjectId(subjectId);
+    }
+
 }

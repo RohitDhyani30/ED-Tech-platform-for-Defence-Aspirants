@@ -1,0 +1,24 @@
+package com.indianarmy.info_platform.ssb.service;
+
+import com.indianarmy.info_platform.ssb.entity.SSBStage;
+import com.indianarmy.info_platform.ssb.repository.SSBStageRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class SSBStageService {
+
+    private final SSBStageRepository repository;
+
+    public List<SSBStage> getAllStages() {
+        return repository.findAll();
+    }
+
+    public SSBStage createStage(SSBStage stage) {
+        return repository.save(stage);
+    }
+
+}
