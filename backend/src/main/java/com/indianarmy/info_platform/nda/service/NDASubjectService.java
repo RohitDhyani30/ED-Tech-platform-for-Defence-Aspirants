@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.service;
 
+import com.indianarmy.info_platform.nda.dto.NDASubjectResponse;
 import com.indianarmy.info_platform.nda.entity.NDASubject;
 import com.indianarmy.info_platform.nda.repository.NDASubjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,19 @@ public class NDASubjectService {
 
     private final NDASubjectRepository repository;
 
-    public List<NDASubject> getAllSubjects() {
-        return repository.findAll();
-    }
+    public List<NDASubjectResponse> getAllSubjects() {
 
+        return repository.findAll()
+                .stream()
+                .map(subject -> new NDASubjectResponse(
+                        subject.getId(),
+                        subject.getName(),
+                        subject.getTotalMarks(),
+                        subject.getDurationMinutes(),
+                        subject.getSyllabusText()
+                ))
+                .toList();
+    }
     public NDASubject getSubjectById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));

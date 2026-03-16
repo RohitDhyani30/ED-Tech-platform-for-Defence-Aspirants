@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.controller;
 
+import com.indianarmy.info_platform.nda.dto.NDAPYQPaperResponse;
 import com.indianarmy.info_platform.nda.entity.NDAPYQPaper;
 import com.indianarmy.info_platform.nda.service.NDAPYQPaperService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class NDAPYQPaperController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<NDAPYQPaper> getAll() {
+    public List<NDAPYQPaperResponse> getAll() {
         return service.getAll();
     }
 

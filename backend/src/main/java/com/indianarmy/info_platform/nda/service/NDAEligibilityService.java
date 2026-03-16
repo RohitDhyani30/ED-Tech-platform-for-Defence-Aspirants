@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.service;
 
+import com.indianarmy.info_platform.nda.dto.NDAEligibilityResponse;
 import com.indianarmy.info_platform.nda.entity.NDAEligibility;
 import com.indianarmy.info_platform.nda.repository.NDAEligibilityRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,20 @@ public class NDAEligibilityService {
 
     private final NDAEligibilityRepository repository;
 
-    public List<NDAEligibility> getAll() {
-        return repository.findAll();
-    }
+    public List<NDAEligibilityResponse> getAll() {
 
+        return repository.findAll()
+                .stream()
+                .map(e -> new NDAEligibilityResponse(
+                        e.getId(),
+                        e.getMinAge(),
+                        e.getMaxAge(),
+                        e.getEducationRequirement(),
+                        e.getNationality(),
+                        e.getMaritalStatus()
+                ))
+                .toList();
+    }
     public NDAEligibility create(@RequestBody NDAEligibility eligibility) {
         return repository.save(eligibility);
     }

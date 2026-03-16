@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.controller;
 
+import com.indianarmy.info_platform.nda.dto.NDASubjectResponse;
 import com.indianarmy.info_platform.nda.entity.NDASubject;
 import com.indianarmy.info_platform.nda.service.NDASubjectService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class NDASubjectController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<NDASubject> getAll() {
+    public List<NDASubjectResponse> getAll() {
         return service.getAllSubjects();
     }
 

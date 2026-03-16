@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.service;
 
+import com.indianarmy.info_platform.nda.dto.NDAPYQPaperResponse;
 import com.indianarmy.info_platform.nda.entity.NDAPYQPaper;
 import com.indianarmy.info_platform.nda.repository.NDAPYQPaperRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,19 @@ public class NDAPYQPaperService {
 
     private final NDAPYQPaperRepository repository;
 
-    public List<NDAPYQPaper> getAll(){
-        return repository.findAll();
-    }
+    public List<NDAPYQPaperResponse> getAll() {
 
+        return repository.findAll()
+                .stream()
+                .map(pyq -> new NDAPYQPaperResponse(
+                        pyq.getId(),
+                        pyq.getYear(),
+                        pyq.getSession(),
+                        pyq.getPdfUrl(),
+                        pyq.getSubject().getName()
+                ))
+                .toList();
+    }
     public NDAPYQPaper create(@RequestBody NDAPYQPaper paper){
         return repository.save(paper);
     }

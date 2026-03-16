@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.service;
 
+import com.indianarmy.info_platform.nda.dto.NDAExamInfoResponse;
 import com.indianarmy.info_platform.nda.entity.NDAExamInfo;
 import com.indianarmy.info_platform.nda.repository.NDAExamInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,18 @@ public class NDAExamInfoService {
 
     private final NDAExamInfoRepository repository;
 
-    public List<NDAExamInfo> getAll() {
-        return repository.findAll();
+    public List<NDAExamInfoResponse> getAll() {
+
+        return repository.findAll()
+                .stream()
+                .map(info -> new NDAExamInfoResponse(
+                        info.getId(),
+                        info.getIntroduction(),
+                        info.getConductingBody(),
+                        info.getOfficialWebsite(),
+                        info.getExamFrequency()
+                ))
+                .toList();
     }
 
     public NDAExamInfo create(@RequestBody NDAExamInfo info) {

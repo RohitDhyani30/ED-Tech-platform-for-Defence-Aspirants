@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.controller;
 
+import com.indianarmy.info_platform.nda.dto.NDAExamInfoResponse;
 import com.indianarmy.info_platform.nda.entity.NDAExamInfo;
 import com.indianarmy.info_platform.nda.repository.NDAExamInfoRepository;
 import com.indianarmy.info_platform.nda.service.NDAExamInfoService;
@@ -18,7 +19,7 @@ public class NDAExamInfoController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<NDAExamInfo> getAll() {
+    public List<NDAExamInfoResponse> getAll() {
         return service.getAll();
     }
 

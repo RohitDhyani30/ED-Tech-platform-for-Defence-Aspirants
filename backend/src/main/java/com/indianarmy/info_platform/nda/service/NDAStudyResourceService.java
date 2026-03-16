@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.service;
 
+import com.indianarmy.info_platform.nda.dto.NDAStudyResourceResponse;
 import com.indianarmy.info_platform.nda.entity.NDAStudyResource;
 import com.indianarmy.info_platform.nda.repository.NDAStudyResourceRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,20 @@ import java.util.List;
 public class NDAStudyResourceService {
     private final NDAStudyResourceRepository repository;
 
-    public List<NDAStudyResource> getAll() {
-        return repository.findAll();
-    }
+    public List<NDAStudyResourceResponse> getAll() {
 
+        return repository.findAll()
+                .stream()
+                .map(res -> new NDAStudyResourceResponse(
+                        res.getId(),
+                        res.getTitle(),
+                        res.getDescription(),
+                        res.getUrl(),
+                        res.getResourceType(),
+                        res.getSubject().getName()
+                ))
+                .toList();
+    }
     public NDAStudyResource create(@RequestBody NDAStudyResource resource) {
         return repository.save(resource);
     }

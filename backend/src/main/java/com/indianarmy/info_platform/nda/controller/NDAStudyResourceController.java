@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.controller;
 
+import com.indianarmy.info_platform.nda.dto.NDAStudyResourceResponse;
 import com.indianarmy.info_platform.nda.entity.NDAStudyResource;
 import com.indianarmy.info_platform.nda.repository.NDAStudyResourceRepository;
 import com.indianarmy.info_platform.nda.service.NDAStudyResourceService;
@@ -18,7 +19,7 @@ public class NDAStudyResourceController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<NDAStudyResource> getAll() {
+    public List<NDAStudyResourceResponse> getAll() {
         return service.getAll();
     }
 

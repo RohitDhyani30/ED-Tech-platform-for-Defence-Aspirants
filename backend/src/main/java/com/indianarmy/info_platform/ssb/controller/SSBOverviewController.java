@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.ssb.controller;
 
+import com.indianarmy.info_platform.ssb.dto.SSBOverviewResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBOverview;
 import com.indianarmy.info_platform.ssb.service.SSBOverviewService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SSBOverviewController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<SSBOverview> getAll() {
+    public List<SSBOverviewResponse> getAll() {
         return service.getAll();
     }
 

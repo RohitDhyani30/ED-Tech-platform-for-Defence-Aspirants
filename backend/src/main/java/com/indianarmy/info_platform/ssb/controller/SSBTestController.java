@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.ssb.controller;
 
+import com.indianarmy.info_platform.ssb.dto.SSBTestResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBTest;
 import com.indianarmy.info_platform.ssb.service.SSBTestService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SSBTestController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<SSBTest> getAll() {
+    public List<SSBTestResponse> getAll() {
         return service.getAll();
     }
 

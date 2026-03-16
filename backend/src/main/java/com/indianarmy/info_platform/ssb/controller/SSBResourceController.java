@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.ssb.controller;
 
+import com.indianarmy.info_platform.ssb.dto.SSBResourceResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBResource;
 import com.indianarmy.info_platform.ssb.service.SSBResourceService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SSBResourceController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<SSBResource> getAll() {
+    public List<SSBResourceResponse> getAll() {
         return service.getAll();
     }
 

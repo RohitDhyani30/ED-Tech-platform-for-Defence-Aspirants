@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.ssb.controller;
 
+import com.indianarmy.info_platform.ssb.dto.SSBStageResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBStage;
 import com.indianarmy.info_platform.ssb.service.SSBStageService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SSBStageController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<SSBStage> getAll() {
+    public List<SSBStageResponse> getAll() {
         return service.getAllStages();
     }
 

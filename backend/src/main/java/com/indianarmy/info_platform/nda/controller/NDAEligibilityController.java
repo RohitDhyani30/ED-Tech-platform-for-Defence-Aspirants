@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.nda.controller;
 
+import com.indianarmy.info_platform.nda.dto.NDAEligibilityResponse;
 import com.indianarmy.info_platform.nda.entity.NDAEligibility;
 import com.indianarmy.info_platform.nda.repository.NDAEligibilityRepository;
 import com.indianarmy.info_platform.nda.service.NDAEligibilityService;
@@ -18,7 +19,7 @@ public class NDAEligibilityController {
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @GetMapping
-    public List<NDAEligibility> getAll() {
+    public List<NDAEligibilityResponse> getAll() {
         return service.getAll();
     }
 

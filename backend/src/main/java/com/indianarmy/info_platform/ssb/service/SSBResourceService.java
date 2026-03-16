@@ -1,5 +1,6 @@
 package com.indianarmy.info_platform.ssb.service;
 
+import com.indianarmy.info_platform.ssb.dto.SSBResourceResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBResource;
 import com.indianarmy.info_platform.ssb.repository.SSBResourceRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,18 @@ public class SSBResourceService {
 
     private final SSBResourceRepository repository;
 
-    public List<SSBResource> getAll() {
-        return repository.findAll();
+    public List<SSBResourceResponse> getAll() {
+
+        return repository.findAll()
+                .stream()
+                .map(r -> new SSBResourceResponse(
+                        r.getId(),
+                        r.getTitle(),
+                        r.getDescription(),
+                        r.getUrl(),
+                        r.getResourceType()
+                ))
+                .toList();
     }
 
     public SSBResource create(SSBResource resource) {
