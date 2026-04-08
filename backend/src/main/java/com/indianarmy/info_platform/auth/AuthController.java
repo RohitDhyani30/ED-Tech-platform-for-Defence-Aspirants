@@ -13,14 +13,18 @@ import java.time.LocalDateTime;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public String register(@RequestBody AuthRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         user.setRole(Role.ASPIRANT);
         userRepository.save(user);
