@@ -1,5 +1,4 @@
-import "../../style/PublicPages.css";
-
+import "../../style/pages/public-pages.css";
 export default function SSBGuide() {
   return (
     <div className="public-page">

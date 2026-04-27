@@ -35,22 +35,43 @@ export default function SSBPrep() {
   }, [selectedStage]);
 
   return (
-    <div>
-      <h2>SSB Preparation</h2>
-      
-      <select onChange={(e) => setSelectedStage(e.target.value)} style={{ padding: 8, marginBottom: 20 }}>
-        {stages.map(s => (
-          <option key={s.id} value={s.id}>{s.stageName}</option>
-        ))}
-      </select>
+    <div className="aspirant-container">
+      <div className="page-header">
+        <h2>SSB Preparation</h2>
+        <p>Complete guide to crack the Services Selection Board interview</p>
+      </div>
 
-      {tests.map(t => (
-        <div key={t.id} style={{ border: "1px solid #333", margin: 10, padding: 15 }}>
-          <h3>{t.testName}</h3>
-          <p>{t.description}</p>
-          <p><strong>Tips:</strong> {t.tips}</p>
+      <div className="filter-section">
+        <select 
+          value={selectedStage || ""} 
+          onChange={(e) => setSelectedStage(parseInt(e.target.value))}
+          className="filter-select"
+        >
+          {stages.map(s => (
+            <option key={s.id} value={s.id}>{s.stageName}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid-auto">
+        {tests.map(t => (
+          <div key={t.id} className="info-card">
+            <h3>{t.testName}</h3>
+            <p>{t.description}</p>
+            {t.tips && (
+              <div className="tip-box">
+                <strong>Tip:</strong> {t.tips}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {tests.length === 0 && (
+        <div className="empty-state">
+          <p>No tests available for this stage.</p>
         </div>
-      ))}
+      )}
     </div>
   );
 }

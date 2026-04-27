@@ -43,11 +43,7 @@ export default function Dashboard() {
     : 0;
 
   if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: "60px" }}>
-        <p>Loading dashboard...</p>
-      </div>
-    );
+    return <div className="loading-state">Loading dashboard...</div>;
   }
 
   return (
@@ -67,7 +63,7 @@ export default function Dashboard() {
         <div className="stat-card">
           <div className="stat-icon">⭐</div>
           <div className="stat-value">{averageScore}%</div>
-          <div className="stat-label">Avg. Score</div>
+          <div className="stat-label">Average Score</div>
         </div>
         <div className="stat-card">
           <div className="stat-icon">🎯</div>
@@ -78,10 +74,10 @@ export default function Dashboard() {
 
       {/* Featured Missions */}
       <div className="section-header">
-        <h2>⭐ Featured Military Operations</h2>
+        <h2>Featured Military Operations</h2>
         <Link to="/missions" className="view-all">View All →</Link>
       </div>
-      <div className="mission-grid">
+      <div className="grid-auto">
         {featuredMissions.slice(0, 3).map(mission => (
           <div key={mission.id} className="mission-card featured">
             <div className="mission-year">{mission.year}</div>
@@ -91,14 +87,14 @@ export default function Dashboard() {
         ))}
         {featuredMissions.length === 0 && (
           <div className="mission-card">
-            <p style={{ color: "var(--text-muted)" }}>No featured missions yet.</p>
+            <p className="text-muted">No featured missions yet.</p>
           </div>
         )}
       </div>
 
       {/* Quick Actions */}
       <div className="section-header">
-        <h2>🚀 Quick Actions</h2>
+        <h2>Quick Actions</h2>
       </div>
       <div className="action-grid">
         <Link to="/study-materials" className="action-card">
@@ -114,7 +110,7 @@ export default function Dashboard() {
         <Link to="/ssb-prep" className="action-card">
           <div className="action-icon">🎯</div>
           <div className="action-title">SSB Preparation</div>
-          <div className="action-sub">Stages, tests & tips</div>
+          <div className="action-sub">Stages, tests and tips</div>
         </Link>
       </div>
 
@@ -122,7 +118,7 @@ export default function Dashboard() {
       {recentResults.length > 0 && (
         <>
           <div className="section-header">
-            <h2>📊 Recent Test Results</h2>
+            <h2>Recent Test Results</h2>
             <Link to="/my-results" className="view-all">View All →</Link>
           </div>
           <table className="results-table">
@@ -142,7 +138,7 @@ export default function Dashboard() {
                   <td>{attempt.score}/{attempt.test?.totalMarks || 0}</td>
                   <td>{attempt.percentage}%</td>
                   <td className={attempt.percentage >= 40 ? "status-pass" : "status-fail"}>
-                    {attempt.percentage >= 40 ? "✓ Passed" : "✗ Failed"}
+                    {attempt.percentage >= 40 ? "Passed" : "Failed"}
                   </td>
                   <td>{attempt.completedAt ? new Date(attempt.completedAt).toLocaleDateString() : "—"}</td>
                 </tr>

@@ -36,6 +36,12 @@ export default function TakeTest() {
     return () => clearInterval(timer);
   }, [timeLeft, submitted]);
 
+  useEffect(() => {
+    if (timeLeft === 0 && !submitted && attemptId) {
+      handleSubmit();
+    }
+  }, [timeLeft]);
+
   const handleAnswer = (questionId, answer) => {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
   };
@@ -53,31 +59,49 @@ export default function TakeTest() {
     }
   };
 
-  if (!test) return <div>Loading test...</div>;
+  if (!test) return <div className="loading-state">Loading test...</div>;
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
   return (
-    <div>
-      <h2>{test.title}</h2>
-      <div style={{ background: "#333", padding: 10, marginBottom: 20 }}>
-        Time Left: {minutes}:{seconds < 10 ? "0" + seconds : seconds}
+    <div className="test-container">
+      <div className="test-timer">
+        <h2>{test.title}</h2>
+        <div className="timer">
+          {minutes}:{seconds < 10 ? "0" + seconds : seconds}
+        </div>
       </div>
 
       {test.questions?.map((q, idx) => (
-        <div key={q.id} style={{ border: "1px solid #555", margin: 15, padding: 15 }}>
-          <p><strong>Q{idx + 1}. {q.text}</strong></p>
-          <div>
-            <label><input type="radio" name={q.id} value="A" onChange={() => handleAnswer(q.id, "A")} /> A. {q.optionA}</label><br/>
-            <label><input type="radio" name={q.id} value="B" onChange={() => handleAnswer(q.id, "B")} /> B. {q.optionB}</label><br/>
-            <label><input type="radio" name={q.id} value="C" onChange={() => handleAnswer(q.id, "C")} /> C. {q.optionC}</label><br/>
-            <label><input type="radio" name={q.id} value="D" onChange={() => handleAnswer(q.id, "D")} /> D. {q.optionD}</label>
+        <div key={q.id} className="question-card">
+          <div className="question-text">
+            Q{idx + 1}. {q.text}
+          </div>
+          <div className="options">
+            <label className="option">
+              <input type="radio" name={q.id} value="A" onChange={() => handleAnswer(q.id, "A")} />
+              <span>A. {q.optionA}</span>
+            </label>
+            <label className="option">
+              <input type="radio" name={q.id} value="B" onChange={() => handleAnswer(q.id, "B")} />
+              <span>B. {q.optionB}</span>
+            </label>
+            <label className="option">
+              <input type="radio" name={q.id} value="C" onChange={() => handleAnswer(q.id, "C")} />
+              <span>C. {q.optionC}</span>
+            </label>
+            <label className="option">
+              <input type="radio" name={q.id} value="D" onChange={() => handleAnswer(q.id, "D")} />
+              <span>D. {q.optionD}</span>
+            </label>
           </div>
         </div>
       ))}
 
-      <button onClick={handleSubmit} style={{ padding: 10, marginTop: 20 }}>Submit Test</button>
+      <button onClick={handleSubmit} className="btn-primary btn-full btn-large">
+        Submit Test
+      </button>
     </div>
   );
 }

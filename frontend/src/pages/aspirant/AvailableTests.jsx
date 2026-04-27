@@ -25,21 +25,37 @@ export default function AvailableTests() {
     navigate(`/take-test/${testId}`);
   };
 
-  if (loading) return <div>Loading tests...</div>;
+  if (loading) return <div className="loading-state">Loading tests...</div>;
 
   return (
-    <div>
-      <h2>Available Tests</h2>
-      {tests.map(t => (
-        <div key={t.id} style={{ border: "1px solid #333", margin: 10, padding: 15, borderRadius: 8 }}>
-          <h3>{t.title}</h3>
-          <p>{t.description}</p>
-          <p>Duration: {t.durationMinutes} minutes</p>
-          <p>Questions: {t.questions?.length || 0}</p>
-          <p>Total Marks: {t.totalMarks}</p>
-          <button onClick={() => startTest(t.id)}>Start Test</button>
+    <div className="aspirant-container">
+      <div className="page-header">
+        <h2>Available Tests</h2>
+        <p>Practice with our mock tests and track your progress</p>
+      </div>
+
+      <div className="grid-auto">
+        {tests.map(t => (
+          <div key={t.id} className="test-card">
+            <h3>{t.title}</h3>
+            {t.description && <p>{t.description}</p>}
+            <div className="test-meta">
+              <span>Duration: {t.durationMinutes} min</span>
+              <span>Questions: {t.questions?.length || 0}</span>
+              <span>Marks: {t.totalMarks}</span>
+            </div>
+            <button onClick={() => startTest(t.id)} className="btn-primary btn-full">
+              Start Test
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {tests.length === 0 && (
+        <div className="empty-state">
+          <p>No tests available at the moment.</p>
         </div>
-      ))}
+      )}
     </div>
   );
 }

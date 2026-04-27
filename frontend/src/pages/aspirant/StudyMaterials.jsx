@@ -29,28 +29,49 @@ export default function StudyMaterials() {
     ? resources 
     : resources.filter(r => r.subject?.id === parseInt(selectedSubject));
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="loading-state">Loading resources...</div>;
 
   return (
-    <div>
-      <h2>Study Materials</h2>
-      
-      <select onChange={(e) => setSelectedSubject(e.target.value)} style={{ padding: 8, marginBottom: 20 }}>
-        <option value="all">All Subjects</option>
-        {subjects.map(s => (
-          <option key={s.id} value={s.id}>{s.name}</option>
-        ))}
-      </select>
+    <div className="aspirant-container">
+      <div className="page-header">
+        <h2>Study Materials</h2>
+        <p>Comprehensive resources for NDA, CDS, and AFCAT preparation</p>
+      </div>
 
-      {filteredResources.map(r => (
-        <div key={r.id} style={{ border: "1px solid #333", margin: 10, padding: 15, borderRadius: 8 }}>
-          <h3>{r.title}</h3>
-          <p>{r.description}</p>
-          <p>Subject: {r.subjectName || r.subject?.name}</p>
-          <p>Type: {r.resourceType}</p>
-          <a href={r.url} target="_blank" rel="noopener noreferrer">Open Resource →</a>
+      <div className="filter-section">
+        <select 
+          value={selectedSubject} 
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          className="filter-select"
+        >
+          <option value="all">All Subjects</option>
+          {subjects.map(s => (
+            <option key={s.id} value={s.id}>{s.name}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid-auto">
+        {filteredResources.map(r => (
+          <div key={r.id} className="resource-card">
+            <h3>{r.title}</h3>
+            {r.description && <p className="resource-description">{r.description}</p>}
+            <div className="resource-meta">
+              <span>Subject: {r.subjectName || r.subject?.name}</span>
+              <span>Type: {r.resourceType}</span>
+            </div>
+            <a href={r.url} target="_blank" rel="noopener noreferrer" className="resource-link">
+              Open Resource →
+            </a>
+          </div>
+        ))}
+      </div>
+
+      {filteredResources.length === 0 && (
+        <div className="empty-state">
+          <p>No resources found for the selected subject.</p>
         </div>
-      ))}
+      )}
     </div>
   );
 }

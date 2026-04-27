@@ -27,23 +27,42 @@ export default function PYQSection() {
     : pyqs.filter(p => p.subject?.id === parseInt(selectedSubject));
 
   return (
-    <div>
-      <h2>PYQ Papers (Past Year Questions)</h2>
-      
-      <select onChange={(e) => setSelectedSubject(e.target.value)} style={{ padding: 8, marginBottom: 20 }}>
-        <option value="all">All Subjects</option>
-        {subjects.map(s => (
-          <option key={s.id} value={s.id}>{s.name}</option>
-        ))}
-      </select>
+    <div className="aspirant-container">
+      <div className="page-header">
+        <h2>PYQ Papers</h2>
+        <p>Previous Year Question Papers for NDA examination</p>
+      </div>
 
-      {filtered.map(p => (
-        <div key={p.id} style={{ border: "1px solid #333", margin: 10, padding: 15 }}>
-          <h3>{p.year} - {p.session}</h3>
-          <p>Subject: {p.subjectName || p.subject?.name}</p>
-          <a href={p.pdfUrl} target="_blank" rel="noopener noreferrer">📄 Download PDF</a>
+      <div className="filter-section">
+        <select 
+          value={selectedSubject} 
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          className="filter-select"
+        >
+          <option value="all">All Subjects</option>
+          {subjects.map(s => (
+            <option key={s.id} value={s.id}>{s.name}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid-auto">
+        {filtered.map(p => (
+          <div key={p.id} className="resource-card">
+            <h3>{p.year} - {p.session}</h3>
+            <p className="resource-subject">Subject: {p.subjectName || p.subject?.name}</p>
+            <a href={p.pdfUrl} target="_blank" rel="noopener noreferrer" className="resource-link">
+              Download PDF →
+            </a>
+          </div>
+        ))}
+      </div>
+
+      {filtered.length === 0 && (
+        <div className="empty-state">
+          <p>No PYQ papers available.</p>
         </div>
-      ))}
+      )}
     </div>
   );
 }

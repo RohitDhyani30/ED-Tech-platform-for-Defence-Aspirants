@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../style/AdminLayout.css";
+import "../../style/layouts/admin-layout.css";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", sub: "Overview" },

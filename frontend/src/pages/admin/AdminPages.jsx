@@ -6,15 +6,12 @@ import { getSubjects, getStudyResources } from "../../services/ndaService";
 import { getOperations } from "../../services/operationService";
 import UsersManager from "./users/UsersManager";
 import { getUserStats } from "../../services/userService";
-import QuestionManager from "./exam/QuestionManager";
 import TestManager from "./exam/TestManager";
-import ExamManager from "./exam/ExamManager";
 import QuestionBank from "./exam/QuestionBank";
 import PYQManager from "./exam/PYQManager";
 import TestResults from "./exam/TestResults";
 
 
-// Admin Home with Stats
 export const AdminHome = () => {
   const [stats, setStats] = useState({
     subjects: 0,
@@ -91,4 +88,4 @@ export const TestResultsPage = () => <TestResults />;
 export const QuestionBankPage = () => <QuestionBank />;
 export const ExamManagementPage = () => <TestManager />;
 export const UsersManagementPage = () => <UsersManager />;
-export { NDAManager, SSBManager, MissionManager,ExamManager };
+export { NDAManager, SSBManager, MissionManager };

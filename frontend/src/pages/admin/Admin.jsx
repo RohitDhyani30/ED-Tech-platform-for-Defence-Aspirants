@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../style/Admin.css";
+import "../../style/pages/admin.css";
 import AdminLayout from "./AdminLayout";
 import { 
   AdminHome, 
@@ -43,7 +43,6 @@ export default function Admin() {
       case "question-bank": return <QuestionBankPage />;
       case "pyq": return <PYQPage />;        
       case "test-results": return <TestResultsPage />; 
-      case "missions": return <MissionManager />;
       default:          return <AdminHome />;
     }
   };

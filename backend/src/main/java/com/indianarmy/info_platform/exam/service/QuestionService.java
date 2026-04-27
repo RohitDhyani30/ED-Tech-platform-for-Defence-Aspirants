@@ -1,11 +1,17 @@
 package com.indianarmy.info_platform.exam.service;
 
 import com.indianarmy.info_platform.exam.entity.Question;
+import com.indianarmy.info_platform.exam.entity.Test;
+import com.indianarmy.info_platform.exam.entity.UserAnswer;
 import com.indianarmy.info_platform.exam.repository.QuestionRepository;
+import com.indianarmy.info_platform.exam.repository.TestRepository;
+import com.indianarmy.info_platform.exam.repository.UserAnswerRepository;
 import com.indianarmy.info_platform.nda.entity.NDASubject;
 import com.indianarmy.info_platform.nda.repository.NDASubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -14,6 +20,8 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final NDASubjectRepository subjectRepository;
+    private final UserAnswerRepository userAnswerRepository;
+    private final TestRepository testRepository;
 
     public List<Question> getAllQuestions() {
         return questionRepository.findAll();
@@ -49,8 +57,21 @@ public class QuestionService {
         return questionRepository.save(existing);
     }
 
+    @Transactional
     public void deleteQuestion(Long id) {
-        questionRepository.deleteById(id);
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Question not found with id: " + id));
+
+        // Delete all user answers referencing this question
+        List<UserAnswer> answers = userAnswerRepository.findByQuestionId(id);
+        if (!answers.isEmpty()) {
+            userAnswerRepository.deleteAll(answers);
+        }
+
+        testRepository.removeQuestionFromAllTests(id);
+
+        // Now delete the question
+        questionRepository.delete(question);
     }
 
     public List<Question> getQuestionsBySubject(Long subjectId) {

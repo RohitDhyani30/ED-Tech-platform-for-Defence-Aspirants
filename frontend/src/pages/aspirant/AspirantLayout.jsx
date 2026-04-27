@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import "../../style/Aspirant.css";
+import "../../style/pages/aspirant.css";
+import "../../style/layouts/aspirant-layout.css";
+
 
 export default function AspirantLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);

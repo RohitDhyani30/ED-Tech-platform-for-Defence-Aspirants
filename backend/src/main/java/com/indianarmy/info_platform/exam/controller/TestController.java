@@ -3,6 +3,7 @@ package com.indianarmy.info_platform.exam.controller;
 import com.indianarmy.info_platform.exam.entity.Test;
 import com.indianarmy.info_platform.exam.service.TestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +43,12 @@ public class TestController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteTest(@PathVariable Long id) {
-        testService.deleteTest(id);
-        return "Test deleted successfully";
+    public ResponseEntity<?> deleteTest(@PathVariable Long id) {
+        try {
+            testService.deleteTest(id);
+            return ResponseEntity.ok().body("Test deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

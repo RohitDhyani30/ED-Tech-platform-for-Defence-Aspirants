@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login } from "../../services/authService";
 import { Link } from "react-router-dom";
-import "../../style/Login.css";
+import "../../style/pages/login.css";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -81,7 +81,7 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="login-btn" disabled={loading}>
+          <button type="submit" className="btn-login" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
 

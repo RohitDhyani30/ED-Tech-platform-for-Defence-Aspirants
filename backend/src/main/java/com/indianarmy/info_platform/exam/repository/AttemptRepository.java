@@ -8,4 +8,5 @@ public interface AttemptRepository extends JpaRepository<Attempt, Long> {
     List<Attempt> findByUserId(Long userId);
     List<Attempt> findByTestId(Long testId);
 
+
 }

@@ -1,14 +1,19 @@
 package com.indianarmy.info_platform.exam.service;
 
+import com.indianarmy.info_platform.exam.entity.Attempt;
 import com.indianarmy.info_platform.exam.entity.Question;
 import com.indianarmy.info_platform.exam.entity.Test;
+import com.indianarmy.info_platform.exam.repository.AttemptRepository;
 import com.indianarmy.info_platform.exam.repository.QuestionRepository;
 import com.indianarmy.info_platform.exam.repository.TestRepository;
 import com.indianarmy.info_platform.nda.entity.NDASubject;
 import com.indianarmy.info_platform.nda.repository.NDASubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ public class TestService {
     private final TestRepository testRepository;
     private final QuestionRepository questionRepository;
     private final NDASubjectRepository subjectRepository;
+    private final AttemptRepository attemptRepository;
 
     public List<Test> getAllTests() {
         return testRepository.findAll();
@@ -48,7 +54,21 @@ public class TestService {
         return testRepository.save(test);
     }
 
+    @Transactional
     public void deleteTest(Long id) {
-        testRepository.deleteById(id);
+        Test test = getTestById(id);
+
+        // Step 1: Delete all attempts for this test
+        List<Attempt> attempts = attemptRepository.findByTestId(id);
+        if (!attempts.isEmpty()) {
+            attemptRepository.deleteAll(attempts);
+        }
+
+        // Step 2: Clear the questions from test (remove from junction table)
+        test.getQuestions().clear();
+        testRepository.save(test);
+
+        // Step 3: Delete the test
+        testRepository.delete(test);
     }
 }
