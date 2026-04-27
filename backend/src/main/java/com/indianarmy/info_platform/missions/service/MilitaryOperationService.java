@@ -51,7 +51,6 @@ public class MilitaryOperationService {
         return repository.save(existing);
     }
 
-    // ✅ ADD THIS - Delete operation
     public void deleteOperation(Long id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Operation not found with id: " + id);
