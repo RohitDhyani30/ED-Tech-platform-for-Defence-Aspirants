@@ -16,7 +16,6 @@ public class NDAStudyResourceService {
     private final NDAStudyResourceRepository repository;
 
     public List<NDAStudyResourceResponse> getAll() {
-
         return repository.findAll()
                 .stream()
                 .map(res -> new NDAStudyResourceResponse(
@@ -25,26 +24,24 @@ public class NDAStudyResourceService {
                         res.getDescription(),
                         res.getUrl(),
                         res.getResourceType(),
-                        res.getSubject().getName()
+                        res.getSubject() != null ? res.getSubject().getName() : "No Subject"  // ✅ Fixed null check
                 ))
                 .toList();
     }
+
     public NDAStudyResource create(@RequestBody NDAStudyResource resource) {
         return repository.save(resource);
     }
 
     public NDAStudyResource update(@PathVariable Long id,
                                    @RequestBody NDAStudyResource updated) {
-
         NDAStudyResource existing = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found"));
-
         existing.setTitle(updated.getTitle());
         existing.setDescription(updated.getDescription());
         existing.setUrl(updated.getUrl());
         existing.setResourceType(updated.getResourceType());
         existing.setSubject(updated.getSubject());
-
         return repository.save(existing);
     }
 
@@ -55,5 +52,4 @@ public class NDAStudyResourceService {
     public List<NDAStudyResource> getBySubject(Long subjectId) {
         return repository.findBySubjectId(subjectId);
     }
-
 }

@@ -27,4 +27,17 @@ public class SSBStageController {
     public SSBStage create(@RequestBody SSBStage stage) {
         return service.createStage(stage);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public SSBStage update(@PathVariable Long id, @RequestBody SSBStage stage) {
+        return service.updateStage(id, stage);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public String deleteStage(@PathVariable Long id) {
+        service.deleteStage(id);
+        return "Stage deleted successfully";
+    }
 }

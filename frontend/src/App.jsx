@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Admin from "./pages/Admin";
-import Dashboard from "./pages/Dashboard";
-import Register from "./pages/Register";
+import Login from "./pages/auth/Login";
+import Admin from "./pages/admin/Admin";
+import Dashboard from "./pages/aspirant/Dashboard";
+import Register from "./pages/auth/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -13,7 +13,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
          <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin" element={
           <ProtectedRoute roleRequired="ADMIN">
             <Admin />

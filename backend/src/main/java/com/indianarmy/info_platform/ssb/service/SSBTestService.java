@@ -35,4 +35,19 @@ public class SSBTestService {
         return repository.save(test);
     }
 
+    public SSBTest updateTest(Long id, SSBTest updatedTest) {
+        SSBTest existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Test not found with id: " + id));
+
+        existing.setTestName(updatedTest.getTestName());
+        existing.setDescription(updatedTest.getDescription());
+        existing.setTips(updatedTest.getTips());
+        existing.setStage(updatedTest.getStage());
+
+        return repository.save(existing);
+    }
+
+    public void deleteTest(Long id) {
+        repository.deleteById(id);
+    }
 }

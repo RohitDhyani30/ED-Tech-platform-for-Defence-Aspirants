@@ -16,7 +16,6 @@ public class NDAPYQPaperService {
     private final NDAPYQPaperRepository repository;
 
     public List<NDAPYQPaperResponse> getAll() {
-
         return repository.findAll()
                 .stream()
                 .map(pyq -> new NDAPYQPaperResponse(
@@ -24,10 +23,11 @@ public class NDAPYQPaperService {
                         pyq.getYear(),
                         pyq.getSession(),
                         pyq.getPdfUrl(),
-                        pyq.getSubject().getName()
+                        pyq.getSubject() != null ? pyq.getSubject().getName() : "No Subject"  // ✅ Fixed null check
                 ))
                 .toList();
     }
+
     public NDAPYQPaper create(@RequestBody NDAPYQPaper paper){
         return repository.save(paper);
     }
@@ -40,4 +40,9 @@ public class NDAPYQPaperService {
         return repository.findBySubjectId(subjectId);
     }
 
+    public void delete(Long id) {
+        NDAPYQPaper pyq = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("PYQ not found with id: " + id));
+        repository.delete(pyq);
+    }
 }
