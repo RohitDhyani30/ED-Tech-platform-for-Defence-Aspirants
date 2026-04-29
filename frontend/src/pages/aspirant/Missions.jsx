@@ -26,19 +26,19 @@ export default function Missions() {
 
   useEffect(() => {
     let filtered = [...missions];
-    
+
     if (selectedYear !== "all") {
-      filtered = filtered.filter(m => m.year === selectedYear);
+      filtered = filtered.filter((m) => m.year === selectedYear);
     }
-    
+
     if (showFeaturedOnly) {
-      filtered = filtered.filter(m => m.featured);
+      filtered = filtered.filter((m) => m.featured);
     }
-    
+
     setFilteredMissions(filtered);
   }, [selectedYear, showFeaturedOnly, missions]);
 
-  const years = [...new Set(missions.map(m => m.year))].sort();
+  const years = [...new Set(missions.map((m) => m.year))].sort();
 
   if (loading) return <div className="loading-state">Loading missions...</div>;
 
@@ -51,39 +51,44 @@ export default function Missions() {
 
       {/* Filters */}
       <div className="filters-bar">
-      <div className="filter-group">
-        <div className="filter-item">
-          <label>Year</label>
-          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-            <option value="all">All Years</option>
-            {years.map(year => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
-        </div>
-        
-        <div className="filter-item checkbox-item">
-          <label className="checkbox-label">
-            <input 
-              type="checkbox" 
-              checked={showFeaturedOnly} 
-              onChange={(e) => setShowFeaturedOnly(e.target.checked)}
-            />
-            <span>Show Featured Only</span>
-          </label>
-        </div>
-        
-        <div className="filter-count">
-          {filteredMissions.length} missions found
+        <div className="filter-group">
+          <div className="filter-item">
+            <label>Year</label>
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              <option value="all">All Years</option>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filter-item checkbox-item">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={showFeaturedOnly}
+                onChange={(e) => setShowFeaturedOnly(e.target.checked)}
+              />
+              <span>Show Featured Only</span>
+            </label>
+          </div>
+
+          <div className="filter-count">
+            {filteredMissions.length} missions found
+          </div>
         </div>
       </div>
-    </div>
       {/* Missions Grid */}
       <div className="grid-auto">
-        {filteredMissions.map(mission => (
-          <div 
-            key={mission.id} 
-            className={`mission-card ${mission.featured ? 'featured' : ''}`}
+        {filteredMissions.map((mission) => (
+          <div
+            key={mission.id}
+            className={`mission-card ${mission.featured ? "featured" : ""}`}
             onClick={() => setSelectedMission(mission)}
           >
             <div className="mission-year">{mission.year}</div>
@@ -105,11 +110,19 @@ export default function Missions() {
 
       {/* Modal for Mission Details */}
       {selectedMission && (
-        <div className="mission-modal-overlay" onClick={() => setSelectedMission(null)}>
+        <div
+          className="mission-modal-overlay"
+          onClick={() => setSelectedMission(null)}
+        >
           <div className="mission-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <span className="modal-year">{selectedMission.year}</span>
-              <button className="modal-close" onClick={() => setSelectedMission(null)}>×</button>
+              <button
+                className="modal-close"
+                onClick={() => setSelectedMission(null)}
+              >
+                ×
+              </button>
             </div>
             <h2>{selectedMission.operationName}</h2>
             <p className="text-muted">{selectedMission.location}</p>

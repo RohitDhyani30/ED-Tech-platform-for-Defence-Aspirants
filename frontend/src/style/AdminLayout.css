@@ -8,8 +8,8 @@
   --text-primary: #e8eaf0;
   --text-muted: #7a8a9a;
   --red-alert: #b83232;
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-ui: 'Rajdhani', sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-ui: "Rajdhani", sans-serif;
 }
 
 .admin-root {
@@ -29,7 +29,7 @@
   height: 58px;
   padding: 0 24px;
   background: var(--bg-panel);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .nav-left {
@@ -40,7 +40,7 @@
 
 .collapse-btn {
   background: transparent;
-  border: 1px solid rgba(208,169,63,0.5);
+  border: 1px solid rgba(208, 169, 63, 0.5);
   color: var(--gold);
   cursor: pointer;
   padding: 4px 10px;
@@ -63,7 +63,7 @@
 
 .admin-badge {
   font-size: 0.7rem;
-  border: 1px solid rgba(208,169,63,0.4);
+  border: 1px solid rgba(208, 169, 63, 0.4);
   padding: 2px 12px;
   color: var(--gold);
   border-radius: 4px;
@@ -108,7 +108,7 @@
 .sidebar {
   width: 240px;
   background: var(--bg-panel);
-  border-right: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
   transition: 0.25s ease;
@@ -120,7 +120,7 @@
 
 .sidebar-header {
   padding: 16px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   margin-bottom: 8px;
 }
 
@@ -150,13 +150,13 @@
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
 }
 
 .nav-item.active {
   color: var(--gold);
-  background: rgba(208,169,63,0.1);
+  background: rgba(208, 169, 63, 0.1);
   border-left: 2px solid var(--gold);
 }
 
@@ -181,7 +181,7 @@
 /* SIDEBAR FOOTER */
 .sidebar-footer {
   margin-top: auto;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding: 12px 0;
 }
 
@@ -203,16 +203,16 @@
 }
 
 .admin-main::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .admin-main::-webkit-scrollbar-thumb {
-  background: rgba(208,169,63,0.3);
+  background: rgba(208, 169, 63, 0.3);
   border-radius: 4px;
 }
 
 .admin-main::-webkit-scrollbar-thumb:hover {
-  background: rgba(208,169,63,0.5);
+  background: rgba(208, 169, 63, 0.5);
 }
 
 /* ================= RESPONSIVE ================= */
@@ -220,31 +220,31 @@
   .admin-navbar {
     padding: 0 16px;
   }
-  
+
   .logo-sub {
     display: none;
   }
-  
+
   .admin-badge {
     display: none;
   }
-  
+
   .admin-main {
     padding: 16px;
   }
-  
+
   .sidebar {
     width: 200px;
   }
-  
+
   .sidebar.collapsed {
     width: 60px;
   }
-  
+
   .nav-item {
     padding: 8px 12px;
   }
-  
+
   .nav-label {
     font-size: 0.75rem;
   }

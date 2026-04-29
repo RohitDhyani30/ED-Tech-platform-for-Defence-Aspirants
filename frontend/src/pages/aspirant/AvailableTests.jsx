@@ -35,7 +35,7 @@ export default function AvailableTests() {
       </div>
 
       <div className="grid-auto">
-        {tests.map(t => (
+        {tests.map((t) => (
           <div key={t.id} className="test-card">
             <h3>{t.title}</h3>
             {t.description && <p>{t.description}</p>}
@@ -44,7 +44,10 @@ export default function AvailableTests() {
               <span>Questions: {t.questions?.length || 0}</span>
               <span>Marks: {t.totalMarks}</span>
             </div>
-            <button onClick={() => startTest(t.id)} className="btn-primary btn-full">
+            <button
+              onClick={() => startTest(t.id)}
+              className="btn-primary btn-full"
+            >
               Start Test
             </button>
           </div>

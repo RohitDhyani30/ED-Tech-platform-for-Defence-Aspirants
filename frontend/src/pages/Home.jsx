@@ -1,4 +1,3 @@
-import "../style/pages/home.css";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -13,10 +12,15 @@ function Home() {
           </div>
         </div>
         <ul className="nav-links">
-          
-          <li><Link to="/hall-of-heroes">Our Heroes</Link></li>
-          <li><Link to="/elite-forces">Elite Forces</Link></li>
-          <li><Link to="/study-hub">Basic Info</Link></li>
+          <li>
+            <Link to="/hall-of-heroes">Our Heroes</Link>
+          </li>
+          <li>
+            <Link to="/elite-forces">Elite Forces</Link>
+          </li>
+          <li>
+            <Link to="/study-hub">Basic Info</Link>
+          </li>
         </ul>
         <div className="nav-actions">
           <Link to="/login">
@@ -49,8 +53,9 @@ function Home() {
           </h1>
 
           <p className="hero-sub">
-            This platform accumulates crucial resources to prepare for <strong>NDA · SSB · CDS</strong> aspirants
-            and defence enthusiasts. <br></br>Study. Serve. Sacrifice.
+            This platform accumulates crucial resources to prepare for{" "}
+            <strong>NDA · SSB · CDS</strong> aspirants and defence enthusiasts.{" "}
+            <br></br>Study. Serve. Sacrifice.
           </p>
 
           <div className="hero-cta">
@@ -61,51 +66,80 @@ function Home() {
         </div>
 
         <div className="hero-image">
-          <img src="/7av-7av-FFJPVyhCutQ-unsplash.jpg" alt="soldier" />        
+          <img src="/7av-7av-FFJPVyhCutQ-unsplash.jpg" alt="soldier" />
         </div>
       </section>
 
       {/* Mission Cards */}
       <section className="section-cards">
         <div className="section-header">
-          <h2>Choose Your <span>Mission</span></h2>
+          <h2>
+            Choose Your <span>Mission</span>
+          </h2>
         </div>
 
         <div className="cards-grid">
           <div className="card card-study">
             <h3>Study Hub</h3>
             <p>NDA, CDS & AFCAT prep with structured modules and mock tests.</p>
-            <Link to="/study-hub" className="card-link">Enter →</Link>
+            <Link to="/study-hub" className="card-link">
+              Enter →
+            </Link>
           </div>
 
           <div className="card card-ssb">
             <h3>SSB Battleground</h3>
-            <p>Psychology tests, GTO tasks, personal interviews — master every SSB stage.</p>
-            <Link to="/ssb-guide" className="card-link">Enter →</Link>
+            <p>
+              Psychology tests, GTO tasks, personal interviews — master every
+              SSB stage.
+            </p>
+            <Link to="/ssb-guide" className="card-link">
+              Enter →
+            </Link>
           </div>
 
           <div className="card card-history">
             <h3>War Chronicles</h3>
-            <p>Relive India's glorious military history — wars, operations, and turning points.</p>
-            <Link to="/war-chronicles" className="card-link">Enter →</Link>
+            <p>
+              Relive India's glorious military history — wars, operations, and
+              turning points.
+            </p>
+            <Link to="/war-chronicles" className="card-link">
+              Enter →
+            </Link>
           </div>
 
           <div className="card card-heroes">
             <h3>Hall of Heroes</h3>
-            <p>Tributes to Param Vir Chakra & Maha Vir Chakra awardees — the immortal ones.</p>
-            <Link to="/hall-of-heroes" className="card-link">Enter →</Link>
+            <p>
+              Tributes to Param Vir Chakra & Maha Vir Chakra awardees — the
+              immortal ones.
+            </p>
+            <Link to="/hall-of-heroes" className="card-link">
+              Enter →
+            </Link>
           </div>
 
           <div className="card card-forces">
             <h3>Elite Forces</h3>
-            <p>PARA SF, MARCOS, Garud — discover India's most lethal special operations units.</p>
-            <Link to="/elite-forces" className="card-link">Enter →</Link>
+            <p>
+              PARA SF, MARCOS, Garud — discover India's most lethal special
+              operations units.
+            </p>
+            <Link to="/elite-forces" className="card-link">
+              Enter →
+            </Link>
           </div>
 
           <div className="card card-current">
             <h3>Defence Intel</h3>
-            <p>Current affairs, defence acquisitions, strategic updates — stay mission-ready.</p>
-            <Link to="/defence-intel" className="card-link">Enter →</Link>
+            <p>
+              Current affairs, defence acquisitions, strategic updates — stay
+              mission-ready.
+            </p>
+            <Link to="/defence-intel" className="card-link">
+              Enter →
+            </Link>
           </div>
         </div>
       </section>
@@ -115,7 +149,9 @@ function Home() {
         <div className="quote-inner">
           <span className="quote-mark">"</span>
           <blockquote>
-            What is the next thing you need for leadership? It is the ability to make up your mind to make a decision and accept full responsibility for that decision.
+            What is the next thing you need for leadership? It is the ability to
+            make up your mind to make a decision and accept full responsibility
+            for that decision.
           </blockquote>
           <cite>— Field Marshal Sam Manekshaw </cite>
         </div>

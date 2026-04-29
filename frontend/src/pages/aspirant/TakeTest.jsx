@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getTestById, startAttempt, submitAttempt } from "../../services/examService";
+import {
+  getTestById,
+  startAttempt,
+  submitAttempt,
+} from "../../services/examService";
 
 export default function TakeTest() {
   const { testId } = useParams();
@@ -10,14 +14,21 @@ export default function TakeTest() {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  // Guard to prevent double-invocation (React StrictMode fires effects twice in dev)
+  const attemptStarted = useRef(false);
 
   useEffect(() => {
+    if (attemptStarted.current) return; // already started — skip duplicate call
+    attemptStarted.current = true;
+
     const loadTest = async () => {
       try {
         const res = await getTestById(testId);
         setTest(res.data);
         setTimeLeft(res.data.durationMinutes * 60);
-        
+
         const attemptRes = await startAttempt(testId);
         setAttemptId(attemptRes.data.id);
       } catch (err) {
@@ -26,28 +37,49 @@ export default function TakeTest() {
       }
     };
     loadTest();
-  }, [testId, navigate]);
+  }, [testId]); // removed navigate from deps — it never changes and adding it could cause re-run
 
+  // Countdown timer
   useEffect(() => {
     if (timeLeft <= 0 || submitted) return;
     const timer = setInterval(() => {
-      setTimeLeft(prev => prev - 1);
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(timer);
   }, [timeLeft, submitted]);
 
+  // Auto-submit when timer hits 0
   useEffect(() => {
     if (timeLeft === 0 && !submitted && attemptId) {
-      handleSubmit();
+      autoSubmit();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft]);
 
+  const autoSubmit = async () => {
+    if (submitting || submitted) return;
+    setSubmitting(true);
+    try {
+      await submitAttempt(attemptId, answers);
+      setSubmitted(true);
+      alert("Time up! Test submitted. View results in My Results.");
+      navigate("/my-results");
+    } catch (err) {
+      console.error(err);
+      alert("Auto-submit failed. Please try submitting manually.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleAnswer = (questionId, answer) => {
-    setAnswers(prev => ({ ...prev, [questionId]: answer }));
+    setAnswers((prev) => ({ ...prev, [questionId]: answer }));
   };
 
   const handleSubmit = async () => {
+    if (submitting || submitted) return;
     if (!window.confirm("Submit test?")) return;
+    setSubmitting(true);
     try {
       await submitAttempt(attemptId, answers);
       setSubmitted(true);
@@ -55,7 +87,9 @@ export default function TakeTest() {
       navigate("/my-results");
     } catch (err) {
       console.error(err);
-      alert("Submit failed");
+      alert("Submit failed. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -80,27 +114,51 @@ export default function TakeTest() {
           </div>
           <div className="options">
             <label className="option">
-              <input type="radio" name={q.id} value="A" onChange={() => handleAnswer(q.id, "A")} />
+              <input
+                type="radio"
+                name={q.id}
+                value="A"
+                onChange={() => handleAnswer(q.id, "A")}
+              />
               <span>A. {q.optionA}</span>
             </label>
             <label className="option">
-              <input type="radio" name={q.id} value="B" onChange={() => handleAnswer(q.id, "B")} />
+              <input
+                type="radio"
+                name={q.id}
+                value="B"
+                onChange={() => handleAnswer(q.id, "B")}
+              />
               <span>B. {q.optionB}</span>
             </label>
             <label className="option">
-              <input type="radio" name={q.id} value="C" onChange={() => handleAnswer(q.id, "C")} />
+              <input
+                type="radio"
+                name={q.id}
+                value="C"
+                onChange={() => handleAnswer(q.id, "C")}
+              />
               <span>C. {q.optionC}</span>
             </label>
             <label className="option">
-              <input type="radio" name={q.id} value="D" onChange={() => handleAnswer(q.id, "D")} />
+              <input
+                type="radio"
+                name={q.id}
+                value="D"
+                onChange={() => handleAnswer(q.id, "D")}
+              />
               <span>D. {q.optionD}</span>
             </label>
           </div>
         </div>
       ))}
 
-      <button onClick={handleSubmit} className="btn-primary btn-full btn-large">
-        Submit Test
+      <button
+        onClick={handleSubmit}
+        className="btn-primary btn-full btn-large"
+        disabled={submitting || submitted}
+      >
+        {submitting ? "Submitting..." : "Submit Test"}
       </button>
     </div>
   );

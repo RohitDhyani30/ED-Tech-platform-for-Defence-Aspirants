@@ -1,6 +1,8 @@
-/* Home Page Specific */
+/* ══════════════════════════════════════════════════════
+   HOME PAGE — Hero, Cards Section, Quote, Footer
+══════════════════════════════════════════════════════ */
 
-/* Hero */
+/* ── Hero ── */
 .hero {
   position: relative;
   min-height: 92vh;
@@ -13,9 +15,28 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 65%),
-              radial-gradient(ellipse at 80% 80%, rgba(8, 20, 40, 0.9) 0%, transparent 60%);
+  background:
+    radial-gradient(
+      ellipse at 30% 50%,
+      rgba(201, 168, 76, 0.06) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 80% 80%,
+      rgba(8, 20, 40, 0.9) 0%,
+      transparent 60%
+    );
   z-index: 1;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(208, 169, 63, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(208, 169, 63, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
 }
 
 .hero-content {
@@ -24,7 +45,7 @@
   max-width: 680px;
 }
 
-/* Badge */
+/* ── Badge Row ── */
 .badge-row {
   display: flex;
   align-items: center;
@@ -33,10 +54,10 @@
 }
 
 .badge-line {
-  flex: 0 0 150px;
+  flex: 0 0 120px;
   height: 1px;
   background: var(--gold);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .badge {
@@ -48,9 +69,10 @@
   background: rgba(201, 168, 76, 0.08);
   border: 1px solid rgba(201, 168, 76, 0.3);
   padding: 5px 14px;
+  white-space: nowrap;
 }
 
-/* Hero Title */
+/* ── Hero Title ── */
 .hero-title {
   display: flex;
   flex-direction: column;
@@ -60,6 +82,7 @@
 .title-line-1 {
   font-family: var(--font-ui);
   font-size: 1.3rem;
+  font-weight: 400;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -70,6 +93,7 @@
   font-size: 6rem;
   line-height: 0.9;
   color: var(--text-primary);
+  letter-spacing: 0.04em;
 }
 
 .title-line-2 em {
@@ -81,57 +105,87 @@
   font-family: var(--font-display);
   font-size: 6rem;
   line-height: 0.9;
+  letter-spacing: 0.04em;
   -webkit-text-stroke: 1px rgba(232, 234, 240, 0.3);
   color: transparent;
 }
 
+/* ── Hero Sub ── */
 .hero-sub {
+  font-family: var(--font-body);
   font-size: 1rem;
   color: var(--text-muted);
   margin-bottom: 36px;
   line-height: 1.7;
+  max-width: 520px;
 }
 
 .hero-sub strong {
   color: var(--gold-light);
+  font-weight: 500;
 }
 
+/* ── Hero CTA ── */
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Hero Image ── */
 .hero-image {
   position: absolute;
-  right: 15%;
+  right: 12%;
   top: 50%;
   transform: translateY(-50%);
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 540px;
+  z-index: 1;
 }
 
 .hero-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 90%);
-  filter: brightness(0.8);
+  mask-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) 90%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) 90%
+  );
+  filter: brightness(0.8) contrast(1.1);
+  animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Cards Section */
+/* ── Cards Section ── */
 .section-cards {
   padding: 100px 60px;
   background: var(--bg-panel);
   border-top: 1px solid var(--border);
 }
 
-.section-header h2 {
+/* Re-uses .section-header from aspirant-layout but overrides h2 size */
+.section-cards .section-header {
+  margin-bottom: 30px;
+  border-bottom: none;
+}
+
+.section-cards .section-header h2 {
   font-family: var(--font-display);
   font-size: 3rem;
   letter-spacing: 0.06em;
-  margin-bottom: 30px;
+  color: var(--text-primary);
 }
 
-.section-header h2 span {
+.section-cards .section-header h2 span {
   color: var(--gold);
 }
 
-/* Quote Banner */
+/* ── Quote Banner ── */
 .quote-banner {
   background: var(--bg-deep);
   border-top: 1px solid var(--border);
@@ -141,7 +195,7 @@
 }
 
 .quote-inner {
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
@@ -149,15 +203,18 @@
   font-family: var(--font-display);
   font-size: 5rem;
   color: var(--gold);
-  opacity: 0.4;
+  opacity: 0.35;
   line-height: 0;
   display: block;
-  margin-bottom: -10px;
+  margin-bottom: -8px;
 }
 
 blockquote {
   font-family: var(--font-ui);
   font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
   line-height: 1.8;
   margin-bottom: 18px;
 }
@@ -170,50 +227,60 @@ cite {
   font-style: normal;
 }
 
-/* Footer */
+/* ── Footer ── */
 .footer {
   background: var(--bg-panel);
   border-top: 1px solid var(--border);
   padding: 48px 60px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .footer-motto {
   font-family: var(--font-ui);
   font-size: 0.82rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 10px;
 }
 
 .footer-copy {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #3a4455;
+  font-family: var(--font-ui);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-image img {
-  animation: fadeIn 1.5s ease-in-out;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .hero-image { display: none; }
-  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .hero-image {
+    display: none;
+  }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .hero { padding: 40px 20px; }
-  .hero-title .title-line-2,
-  .hero-title .title-line-3 { font-size: 3rem; }
-  .section-cards { padding: 40px 20px; }
-  .cards-grid { grid-template-columns: 1fr; }
-  .quote-banner { padding: 40px 20px; }
-  .footer { padding: 30px 20px; }
+  .hero {
+    padding: 50px 24px;
+  }
+  .title-line-2,
+  .title-line-3 {
+    font-size: 3.5rem;
+  }
+  .section-cards {
+    padding: 50px 24px;
+  }
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .quote-banner {
+    padding: 50px 24px;
+  }
+  .footer {
+    padding: 36px 24px;
+  }
 }

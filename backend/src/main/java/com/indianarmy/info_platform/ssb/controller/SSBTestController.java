@@ -4,6 +4,7 @@ import com.indianarmy.info_platform.ssb.dto.SSBTestResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBTest;
 import com.indianarmy.info_platform.ssb.service.SSBTestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +43,12 @@ public class SSBTestController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteTest(@PathVariable Long id) {
-        service.deleteTest(id);
-        return "Test deleted successfully";
+    public ResponseEntity<?> deleteTest(@PathVariable Long id) {
+        try {
+            service.deleteTest(id);
+            return ResponseEntity.ok().body("Test deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

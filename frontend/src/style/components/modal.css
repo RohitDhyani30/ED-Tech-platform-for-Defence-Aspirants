@@ -1,45 +1,149 @@
-/* Modal Styles */
+/* ══════════════════════════════════════════════════════
+   MODAL — Glassmorphism modal overlay
+   Used by: Missions page, Admin managers
+══════════════════════════════════════════════════════ */
 
-.modal-overlay {
+/* ── Overlay ── */
+.modal-overlay,
+.mission-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: var(--space-md);
 }
 
-.modal-content {
-  background: var(--bg-panel);
-  border: 1px solid var(--gold);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 85vh;
+/* ── Content box ── */
+.modal-content,
+.mission-modal {
+  background: rgba(12, 19, 32, 0.96);
+  border: 1px solid var(--border-gold);
+  padding: var(--space-xl);
+  max-width: 640px;
+  width: 100%;
+  max-height: 88vh;
   overflow-y: auto;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
 }
 
-.modal-content h3 {
+/* ── Modal Header ── */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-year {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 20px;
+  background: rgba(208, 169, 63, 0.1);
+  border: 1px solid var(--border-gold);
+  padding: 4px 12px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  transition: color var(--t-fast);
+}
+
+.modal-close:hover {
+  color: var(--gold);
+}
+
+/* ── Mission Modal specifics ── */
+.mission-modal h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.modal-section {
+  margin-top: var(--space-lg);
+}
+
+.modal-section h4 {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+.modal-section p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.modal-badge {
+  display: inline-block;
+  margin-top: var(--space-md);
+  padding: 4px 14px;
+  background: rgba(208, 169, 63, 0.12);
+  border: 1px solid var(--border-gold);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Admin modal forms ── */
+.modal-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-lg);
 }
 
 .modal-actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border);
 }
+
+/* ── Question list in modal ── */
 .modal-questions-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
   max-height: 400px;
   overflow-y: auto;
 }
@@ -47,36 +151,26 @@
 .modal-question-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px;
+  gap: var(--space-md);
+  padding: 10px var(--space-md);
   background: var(--bg-deep);
-  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background var(--t-fast);
 }
 
 .modal-question-item:hover {
-  background: rgba(208, 169, 63, 0.1);
+  background: rgba(208, 169, 63, 0.07);
 }
 
-.modal-question-item input {
-  width: 18px;
-  height: 18px;
+.modal-question-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   accent-color: var(--gold);
 }
 
 .modal-question-item span {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--text-primary);
   line-height: 1.4;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 20px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border);
 }

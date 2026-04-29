@@ -32,4 +32,11 @@ public class SSBResourceService {
         return repository.save(resource);
     }
 
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Resource not found with id: " + id);
+        }
+        repository.deleteById(id);
+    }
+
 }

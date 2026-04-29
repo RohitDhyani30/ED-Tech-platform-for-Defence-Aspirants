@@ -1,68 +1,327 @@
-/* Aspirant Layout */
+/* ══════════════════════════════════════════════════════
+   ASPIRANT LAYOUT — Tactical Portal sidebar + main area
+   Classes: .portal-root | .portal-sidebar | .portal-nav-link
+            .portal-main | .portal-header | .portal-content
+══════════════════════════════════════════════════════ */
 
-.aspirant-root {
+.portal-root {
   display: flex;
   min-height: 100vh;
   background: var(--bg-deep);
 }
 
-.aspirant-sidebar {
-  width: 260px;
+/* ── Sidebar ── */
+.portal-sidebar {
+  width: 280px;
   background: var(--bg-panel);
   border-right: 1px solid var(--border);
-  position: fixed;
+  display: flex;
+  flex-direction: column;
+  transition: width var(--t-slow) cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  position: sticky;
+  top: 0;
   height: 100vh;
 }
 
-.aspirant-sidebar.collapsed {
-  width: 70px;
+.portal-sidebar.collapsed {
+  width: 72px;
 }
 
+/* ── Sidebar Header ── */
 .sidebar-header {
-  padding: 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sidebar-nav {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.nav-link {
+  padding: var(--space-lg);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  color: var(--text-muted);
-  transition: all 0.2s;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
+  min-height: 80px;
 }
 
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-primary);
+/* ── Logo (shared with AdminLayout) ── */
+.portal-logo {
+  font-family: var(--font-display);
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
-.nav-link.active {
-  background: rgba(208, 169, 63, 0.12);
-  color: var(--gold);
-}
+/* logo-main & logo-sub come from navbar.css */
 
-.aspirant-main {
+/* ── Nav ── */
+.portal-nav {
   flex: 1;
-  margin-left: 260px;
+  padding: var(--space-sm) 0;
+  overflow-y: auto;
 }
 
-.aspirant-header {
-  padding: 16px 32px;
+.portal-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 12px var(--space-lg);
+  color: var(--text-muted);
+  transition: all var(--t-base);
+  position: relative;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.portal-nav-link:hover,
+.portal-nav-link.active {
+  color: var(--gold);
+  background: rgba(208, 169, 63, 0.05);
+}
+
+/* Gold left border for active item */
+.portal-nav-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(208, 169, 63, 0.5);
+}
+
+/* ── Visual dash indicator ── */
+.nav-visual-indicator {
+  width: 12px;
+  height: 2px;
+  background: currentColor;
+  flex-shrink: 0;
+  transition: all var(--t-base);
+}
+
+.portal-nav-link.active .nav-visual-indicator {
+  width: 20px;
+  background: var(--gold);
+}
+
+.nav-label {
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ── Sidebar Footer ── */
+.sidebar-footer {
+  border-top: 1px solid var(--border-light);
+}
+
+/* ── Toggle Button ── */
+.portal-sidebar-toggle {
+  background: rgba(208, 169, 63, 0.08);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-base);
+  flex-shrink: 0;
+}
+
+.portal-sidebar-toggle:hover {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+
+/* ── Main Area ── */
+.portal-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ── Sticky Header ── */
+.portal-header {
+  height: 72px;
+  background: rgba(12, 19, 32, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-xl);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.portal-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── Scrollable Content ── */
+.portal-content {
+  flex: 1;
+  padding: var(--space-xl);
+  overflow-y: auto;
+}
+
+/* ── Page Header inside portal ── */
+.page-header {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
   background: var(--bg-panel);
-  border-bottom: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
+}
+
+.page-header h1,
+.page-header h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-xs);
+}
+
+.page-header p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ── Aspirant container (wraps pages) ── */
+.aspirant-container {
+  max-width: 1200px;
+}
+
+/* ── Section Header ── */
+.section-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border);
 }
 
-.aspirant-content {
-  padding: 32px;
+.section-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+/* ── Test Container ── */
+.test-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.test-timer {
+  background: rgba(12, 19, 32, 0.9);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  padding: var(--space-md) var(--space-xl);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.test-timer h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.timer {
+  font-family: "Courier New", monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--gold);
+  background: var(--bg-deep);
+  padding: 6px 18px;
+  border: 1px solid var(--border-gold);
+  letter-spacing: 0.1em;
+}
+
+/* ── Question Card ── */
+.question-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-corner)) 0,
+    100% var(--clip-corner),
+    100% 100%,
+    var(--clip-corner) 100%,
+    0 calc(100% - var(--clip-corner))
+  );
+}
+
+.question-text {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px var(--space-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--t-fast);
+}
+
+.option:hover {
+  background: rgba(208, 169, 63, 0.05);
+  border-color: var(--border);
+}
+
+.option input[type="radio"] {
+  accent-color: var(--gold);
+}
+
+.option span {
+  font-size: 0.9rem;
+  color: var(--text-primary);
 }

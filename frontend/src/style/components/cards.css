@@ -1,16 +1,47 @@
-/* Card Styles */
+/* ══════════════════════════════════════════════════════
+   CARDS — Tactical Clipped-Corner Card System
+   Used by: Home, Dashboard, Admin, Public pages
+══════════════════════════════════════════════════════ */
 
-.card {
+/* ── Base Tactical Card ── */
+.card,
+.info-card,
+.hero-card,
+.war-card,
+.elite-card,
+.mission-card,
+.resource-card,
+.test-card,
+.news-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  padding: 34px 28px;
+  padding: var(--space-lg) var(--space-xl);
   position: relative;
-  transition: border-color 0.25s, transform 0.2s;
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  transition:
+    border-color var(--t-base),
+    transform var(--t-base),
+    box-shadow var(--t-base);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-corner)) 0,
+    100% var(--clip-corner),
+    100% 100%,
+    var(--clip-corner) 100%,
+    0 calc(100% - var(--clip-corner))
+  );
 }
 
-.card::before {
-  content: '';
+/* ── Gold top-accent bar on hover ── */
+.card::before,
+.info-card::before,
+.hero-card::before,
+.war-card::before,
+.elite-card::before,
+.mission-card::before,
+.resource-card::before,
+.test-card::before,
+.news-card::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -18,35 +49,57 @@
   height: 2px;
   background: linear-gradient(90deg, var(--gold), transparent);
   opacity: 0;
-  transition: opacity 0.25s;
+  transition: opacity var(--t-base);
 }
 
-.card:hover {
-  border-color: rgba(201, 168, 76, 0.4);
-  transform: translateY(-3px);
-}
-
-.card:hover::before {
+.card:hover::before,
+.info-card:hover::before,
+.hero-card:hover::before,
+.war-card:hover::before,
+.elite-card:hover::before,
+.mission-card:hover::before,
+.resource-card:hover::before,
+.test-card:hover::before,
+.news-card:hover::before {
   opacity: 1;
 }
 
-.card h3 {
+.card:hover,
+.info-card:hover,
+.hero-card:hover,
+.war-card:hover,
+.elite-card:hover,
+.mission-card:hover,
+.resource-card:hover,
+.test-card:hover,
+.news-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* ── Card Typography ── */
+.card h3,
+.info-card h3,
+.hero-card h3 {
   font-family: var(--font-ui);
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-primary);
-  margin-bottom: 10px;
+  margin-bottom: var(--space-sm);
 }
 
-.card p {
+.card p,
+.info-card p {
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.65;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-md);
 }
 
+/* ── Card Link ── */
 .card-link {
   font-family: var(--font-ui);
   font-size: 0.8rem;
@@ -54,22 +107,576 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
-  transition: color 0.2s;
+  transition: color var(--t-fast);
+  display: inline-block;
+  margin-top: var(--space-sm);
 }
 
 .card-link:hover {
   color: var(--gold-light);
 }
 
-/* Card Grid */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* ── Stat value inside any card ── */
+.h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
 }
 
-@media (max-width: 768px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
+/* ── Mission Card Specifics ── */
+.mission-card {
+  cursor: pointer;
+}
+.mission-card.featured {
+  border-left: 3px solid var(--gold);
+}
+
+.mission-year {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-sm);
+}
+
+.mission-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: var(--space-xs);
+}
+
+.mission-location {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.mission-objective-preview {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── Resource Card ── */
+.resource-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.resource-title {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex: 1;
+  margin: 0;
+}
+
+.resource-type-badge {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  background: rgba(208, 169, 63, 0.14);
+  border: 1px solid rgba(208, 169, 63, 0.3);
+  color: var(--gold);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.resource-description {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: var(--space-md);
+}
+
+.resource-subject {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.resource-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-light);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.meta-label {
+  color: var(--text-muted);
+}
+.meta-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ── Resource Link ── */
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 18px;
+  font-size: 0.75rem;
+  margin-top: auto;
+  text-decoration: none;
+}
+
+/* ── Hero Card (Hall of Heroes) ── */
+.hero-card {
+  text-align: center;
+}
+
+.hero-rank {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-award {
+  display: inline-block;
+  background: rgba(208, 169, 63, 0.12);
+  border: 1px solid rgba(208, 169, 63, 0.3);
+  padding: 4px 14px;
+  font-size: 0.68rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-detail {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── War Card ── */
+.war-year {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--text-dark);
+  padding: 3px 12px;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.war-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: var(--space-sm);
+}
+
+.war-location,
+.war-result {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-ui);
+  letter-spacing: 0.05em;
+}
+
+.war-result {
+  color: var(--gold-light);
+}
+
+.war-description {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: var(--space-sm);
+}
+
+/* ── Elite Force Card ── */
+.elite-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.elite-header {
+  background: rgba(12, 19, 32, 0.9);
+  padding: var(--space-md);
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.elite-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+}
+
+.elite-motto {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+.elite-content {
+  padding: var(--space-md);
+}
+
+.elite-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.elite-content h4 {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-xs);
+}
+
+.elite-content ul li {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding: 4px 0;
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.elite-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ── News Card ── */
+.news-date {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Test Card ── */
+.test-card .test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.test-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+}
+
+.test-card p {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: var(--space-sm);
+}
+
+.test-stage {
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  background: rgba(208, 169, 63, 0.12);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.test-description {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: var(--space-sm);
+}
+
+.test-tips {
+  background: rgba(208, 169, 63, 0.06);
+  border-left: 3px solid var(--gold);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.test-tips strong {
+  color: var(--gold-light);
+}
+
+.test-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* ── Rank Card ── */
+.rank-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  transition: border-color var(--t-base);
+}
+
+.rank-card:hover {
+  border-color: var(--border-gold);
+}
+
+.rank-card.highest {
+  border-color: var(--gold);
+  background: rgba(208, 169, 63, 0.06);
+}
+
+.rank-name {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.rank-insignia {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ── Tip Card ── */
+.tip-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  position: relative;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-corner)) 0,
+    100% var(--clip-corner),
+    100% 100%,
+    var(--clip-corner) 100%,
+    0 calc(100% - var(--clip-corner))
+  );
+}
+
+.tip-number {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  background: var(--gold);
+  color: var(--text-dark);
+  padding: 2px 12px;
+  letter-spacing: 0.05em;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tip-card h3 {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: var(--space-sm);
+}
+
+.tip-card p {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── SSB Stage Card ── */
+.stage-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-corner)) 0,
+    100% var(--clip-corner),
+    100% 100%,
+    var(--clip-corner) 100%,
+    0 calc(100% - var(--clip-corner))
+  );
+}
+
+.stage-header {
+  background: linear-gradient(90deg, rgba(208, 169, 63, 0.12), transparent);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-gold);
+}
+
+.stage-day {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+}
+
+.stage-content {
+  padding: var(--space-lg);
+}
+
+.stage-content h3 {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.06em;
+  margin: var(--space-md) 0 var(--space-xs);
+}
+
+.stage-content h3:first-child {
+  margin-top: 0;
+}
+
+.stage-content p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: var(--space-sm);
+}
+
+.tip-box {
+  background: rgba(208, 169, 63, 0.06);
+  border-left: 3px solid var(--gold);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: var(--space-md);
+}
+
+.tip-box strong {
+  color: var(--gold);
+}
+
+/* ── OLQ Grid Items ── */
+.olq-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.olq-item {
+  padding: 6px 14px;
+  background: rgba(208, 169, 63, 0.08);
+  border: 1px solid var(--border-gold);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--gold-light);
+}
+
+/* ── Books List ── */
+.books-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.book-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color var(--t-base);
+}
+
+.book-item:hover {
+  border-color: var(--border-gold);
+}
+
+.book-item strong {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.book-item p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Card-level stat values ── */
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.stat-label {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* ── Command/Admin Main Content ── */
+.command-main-content {
+  padding: var(--space-lg) 0;
 }

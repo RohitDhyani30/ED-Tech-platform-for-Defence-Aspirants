@@ -1,32 +1,62 @@
-/* Theme Variables - Military/Gold Theme */
+/* ══════════════════════════════════════════════════════
+   BRAVEHEART — Design Token System
+   Palette: Deep BG #060a0f | Panel #0c1320 | Gold #d0a93f | Red #b83232
+   Fonts: Bebas Neue (display) | Rajdhani (ui) | Inter (body)
+══════════════════════════════════════════════════════ */
 
 :root {
-  /* Colors */
+  /* ── Colors ── */
   --gold: #d0a93f;
   --gold-light: #f0cc6e;
   --gold-dark: #b8922a;
+  --red-alert: #b83232;
+  --green-ok: #3a8c4a;
+
+  /* ── Backgrounds ── */
   --bg-deep: #060a0f;
   --bg-panel: #0c1320;
   --bg-card: #101a28;
+  --bg-glass: rgba(12, 19, 32, 0.6);
+
+  /* ── Borders ── */
   --border: rgba(139, 154, 70, 0.25);
-  --border-light: rgba(139, 154, 70, 0.15);
+  --border-light: rgba(139, 154, 70, 0.12);
+  --border-gold: rgba(208, 169, 63, 0.4);
+
+  /* ── Text ── */
   --text-primary: #e8eaf0;
   --text-muted: #7a8a9a;
-  --red-alert: #b83232;
-  
-  /* Fonts */
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-ui: 'Rajdhani', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  
-  /* Spacing */
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  
-  /* Radius */
+  --text-dark: #0a0f1c;
+
+  /* ── Fonts ── */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-ui: "Rajdhani", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* ── Spacing ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Radii ── */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
+
+  /* ── Clipped corner size ── */
+  --clip-corner: 16px;
+
+  /* ── Transitions ── */
+  --t-fast: 0.15s ease;
+  --t-base: 0.25s ease;
+  --t-slow: 0.4s ease;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(208, 169, 63, 0.2);
+  --shadow-box: 0 0 50px rgba(0, 0, 0, 0.7);
 }

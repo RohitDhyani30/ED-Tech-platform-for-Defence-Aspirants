@@ -1,114 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap');
+/* ══════════════════════════════════════════════════════
+   BRAVEHEART — Main Entry Point
+   Imports: Variables → Reset → Components → Layouts → Pages → Utils
+══════════════════════════════════════════════════════ */
 
-/* ── Global CSS Variables ── */
-:root {
-  --olive:       #809718;
-  --olive-dark:  #5c6630;
-  --gold:        #d0a93f;
-  --gold-light:  #f0cc6e;
-  --bg-deep:     #060a0f;
-  --bg-panel:    #0c1320;
-  --bg-card:     #101a28;
-  --border:      rgba(139, 154, 70, 0.25);
-  --text-primary: #e8eaf0;
-  --text-muted:   #7a8a9a;
-  --red-alert:   #b83232;
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-ui:      'Rajdhani', sans-serif;
-  --font-body:    'Inter', sans-serif;
-}
+/* 1. Design Tokens */
+@import "./base/variables.css";
 
-/* ── Reset & Base Styles ── */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* 2. Base Reset + Typography */
+@import "./base/reset.css";
 
-body {
-  background: var(--bg-deep);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  line-height: 1.6;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
+/* 3. Reusable Components */
+@import "./components/navbar.css";
+@import "./components/buttons.css";
+@import "./components/cards.css";
+@import "./components/grid.css";
+@import "./components/modal.css";
+@import "./components/tables.css";
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+/* 4. Layouts */
+@import "./layouts/aspirant-layout.css";
+@import "./layouts/admin-layout.css";
 
-ul {
-  list-style: none;
-}
+/* 5. Pages */
+@import "./pages/home.css";
+@import "./pages/login.css";
+@import "./pages/register.css";
+@import "./pages/public-pages.css";
+@import "./pages/aspirant.css";
+@import "./pages/admin.css";
 
-button {
-  cursor: pointer;
-}
-
-
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 34px 28px;
-  position: relative;
-  transition: border-color 0.25s, transform 0.2s;
-  cursor: default;
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-
-.card:hover::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity 0.25s;
-}
-.card:hover {
-  border-color: rgba(201,168,76,0.4);
-  transform: translateY(-3px);
-}
-.card:hover::before {
-  opacity: 1;
-}
-
-.card h3 {
-  font-family: var(--font-ui);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  margin-bottom: 10px;
-}
-.card p {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.65;
-  margin-bottom: 20px;
-}
-.card-link {
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  transition: color 0.2s;
-}
-.card-link:hover {
-  color: var(--gold-light);
-}
+/* 6. Animations + Responsive */
+@import "./utils/animations.css";
+@import "./utils/responsive.css";

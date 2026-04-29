@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { register } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
-import "../../style/pages/register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login");
       }, 1200);
-
     } catch (err) {
       console.error(err);
 
@@ -57,7 +55,6 @@ const Register = () => {
 
   return (
     <div id="register-page">
-
       {/* VIDEO BACKGROUND */}
       <video autoPlay loop muted playsInline className="bg-video">
         <source src="/soldier.mp4" type="video/mp4" />
@@ -68,14 +65,10 @@ const Register = () => {
 
       {/* REGISTER BOX */}
       <div className="reg-box">
-
         <h1 className="reg-title">Join the Force</h1>
-        <p className="reg-sub">
-          Create your account and begin your journey.
-        </p>
+        <p className="reg-sub">Create your account and begin your journey.</p>
 
         <form onSubmit={handleRegister} className="reg-form">
-
           <div className="input-group">
             <label>Name</label>
             <input
@@ -118,7 +111,6 @@ const Register = () => {
 
           {message && <p className="success-text">{message}</p>}
           {error && <p className="error-text">{error}</p>}
-
         </form>
       </div>
     </div>

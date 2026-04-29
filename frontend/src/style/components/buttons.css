@@ -1,37 +1,68 @@
-/* Button Styles */
+/* ══════════════════════════════════════════════════════
+   BUTTONS — All button variants for the project
+   DRY: Shared base applied via .btn, then modifiers
+══════════════════════════════════════════════════════ */
 
-.btn-login {
-  background: var(--gold);
-  color: #0a0f1c;
+/* ── Shared Base ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-family: var(--font-ui);
   font-weight: 700;
   font-size: 0.82rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 9px 20px;
-  transition: background 0.2s;
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-base);
+  white-space: nowrap;
 }
 
-.btn-login:hover {
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Gold Primary ── */
+.btn-primary,
+.btn-login,
+.btn-add,
+.reg-btn,
+.resource-link {
+  background: var(--gold);
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  transition: background var(--t-base);
+}
+
+.btn-primary:hover,
+.btn-login:hover,
+.btn-add:hover,
+.reg-btn:hover,
+.resource-link:hover {
   background: var(--gold-light);
 }
 
-.btn-signin {
-  background: rgba(120, 120, 120, 0.638);
-  color: #0a0f1c;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.82rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 9px 20px;
-  transition: background 0.2s;
+.btn-primary:disabled,
+.reg-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.btn-signin:hover {
-  background: rgba(177, 176, 176, 0.638);
-}
-
+/* ── Ghost / Outline ── */
+.btn-outline,
+.btn-secondary,
+.btn-signin,
 .cta {
   background: transparent;
   color: var(--text-muted);
@@ -41,140 +72,167 @@
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 14px 28px;
-  transition: all 0.2s;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all var(--t-base);
 }
 
+.btn-outline:hover,
+.btn-secondary:hover,
+.btn-signin:hover,
 .cta:hover {
   border-color: var(--gold);
   color: var(--gold);
+  background: rgba(208, 169, 63, 0.06);
 }
 
-/* Admin Buttons */
-.btn-add {
-  background: var(--gold);
-  color: #0a0f1c;
-  padding: 6px 12px;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-.btn-edit {
-  background: #3a4455;
-  color: #fff;
-  padding: 6px 12px;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-.btn-delete {
-  background: var(--red-alert);
-  color: white;
-  padding: 6px 12px;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-}
-
-.btn-add:hover, .btn-edit:hover, .btn-delete:hover {
-  opacity: 0.85;
-}
-
-.admin-btn-secondary {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: 8px 16px;
-  border-radius: 4px;
+/* ── Alert / Danger ── */
+.btn-alert,
+.btn-delete,
+.admin-btn-danger {
+  background: rgba(184, 50, 50, 0.12);
+  color: var(--red-alert);
+  border: 1px solid var(--red-alert);
   font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--t-base);
 }
 
-.admin-btn-secondary:hover {
+.btn-alert:hover,
+.btn-delete:hover,
+.admin-btn-danger:hover {
+  background: rgba(184, 50, 50, 0.28);
+}
+
+/* ── Neutral Edit ── */
+.btn-edit {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all var(--t-base);
+}
+
+.btn-edit:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(208, 169, 63, 0.05);
 }
 
-.admin-btn-danger {
-  background: transparent;
-  border: 1px solid var(--red-alert);
-  color: var(--red-alert);
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.admin-btn-danger:hover {
-  background: rgba(184, 50, 50, 0.1);
-}
-
+/* ── Size Modifiers ── */
+.btn-sm,
 .btn-small {
-  padding: 4px 10px;
-  font-size: 0.7rem;
+  padding: 5px 12px;
+  font-size: 0.72rem;
 }
-
+.btn-lg,
 .btn-large {
-  padding: 14px 28px;
+  padding: 14px 32px;
   font-size: 1rem;
 }
-
 .btn-full {
   width: 100%;
 }
 
+/* ── Layout Utility ── */
 .flex-right {
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.table-responsive {
-  overflow-x: auto;
+/* ── Status Indicators ── */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 
-.loading-state {
-  text-align: center;
-  padding: 60px;
-  color: var(--text-muted);
+.status-active {
+  background: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+}
+.status-alert {
+  background: var(--red-alert);
+  box-shadow: 0 0 6px var(--red-alert);
 }
 
+/* Table cell pass/fail text colours */
+.status-pass {
+  color: #4caf50;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+.status-fail {
+  color: var(--red-alert);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+/* ── Text utilities ── */
+.text-gold {
+  color: var(--gold);
+}
 .text-muted {
   color: var(--text-muted);
 }
-
-.filter-section {
-  margin-bottom: 20px;
+.text-ui {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+.label-caps {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.filter-select {
-  background: var(--bg-deep);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  padding: 10px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.resource-meta {
-  display: flex;
-  gap: 15px;
-  font-size: 0.75rem;
+/* ── Loading State ── */
+.loading-state {
+  text-align: center;
+  padding: 80px var(--space-lg);
   color: var(--text-muted);
-  margin: 10px 0;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.mission-objective-preview {
-  font-size: 0.8rem;
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 60px var(--space-lg);
   color: var(--text-muted);
-  margin: 10px 0;
-  line-height: 1.5;
+  border: 1px dashed var(--border);
+  background: var(--bg-card);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-corner)) 0,
+    100% var(--clip-corner),
+    100% 100%,
+    var(--clip-corner) 100%,
+    0 calc(100% - var(--clip-corner))
+  );
+}
+
+/* ── Table Responsive Wrapper ── */
+.table-responsive {
+  overflow-x: auto;
 }

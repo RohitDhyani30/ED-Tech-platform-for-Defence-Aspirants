@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { login } from "../../services/authService";
 import { Link } from "react-router-dom";
-import "../../style/pages/login.css";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -25,7 +24,6 @@ export default function Login() {
       } else {
         window.location.href = "/dashboard";
       }
-
     } catch (err) {
       console.error(err);
       if (err.response && err.response.data) {
@@ -40,7 +38,6 @@ export default function Login() {
 
   return (
     <div id="login-page">
-
       {/* VIDEO BACKGROUND */}
       <video autoPlay loop muted playsInline className="bg-video">
         <source src="/soldier.mp4" type="video/mp4" />
@@ -51,14 +48,12 @@ export default function Login() {
 
       {/* LOGIN BOX */}
       <div className="login-box">
-
         <h1 className="login-title">Login</h1>
         <p className="login-sub">
           Access your account and continue your journey.
         </p>
 
         <form onSubmit={handleSubmit} className="login-form">
-
           <div className="input-group">
             <label>Email</label>
             <input
@@ -86,7 +81,6 @@ export default function Login() {
           </button>
 
           {error && <p className="error-text">{error}</p>}
-
         </form>
 
         <p className="register-link">

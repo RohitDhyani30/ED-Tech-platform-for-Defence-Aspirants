@@ -1,4 +1,7 @@
-/* Common Grid Layouts */
+/* ══════════════════════════════════════════════════════
+   GRID — Reusable layout grids
+══════════════════════════════════════════════════════ */
+
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -17,14 +20,80 @@
   gap: 20px;
 }
 
+/* ── Responsive auto-fill grid (used by AvailableTests, PYQSection, Missions) ── */
 .grid-auto {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
+/* ── Responsive content grids ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.war-grid,
+.heroes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.elite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.test-grid,
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* ── Home page 3-col cards ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .cards-grid {
     grid-template-columns: 1fr;
   }
 }

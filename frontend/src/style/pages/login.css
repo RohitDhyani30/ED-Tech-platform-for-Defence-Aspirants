@@ -1,4 +1,6 @@
-/* Login Page */
+/* ══════════════════════════════════════════════════════
+   LOGIN PAGE — Video background + glassmorphism box
+══════════════════════════════════════════════════════ */
 
 #login-page {
   position: relative;
@@ -9,103 +11,163 @@
   overflow: hidden;
 }
 
+/* ── Video Background ── */
 .bg-video {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(1.15) contrast(1.2);
+  filter: brightness(1.1) contrast(1.15);
   z-index: 0;
-  animation: slowZoom 12s ease-in-out infinite alternate;
+  animation: slowZoom 14s ease-in-out infinite alternate;
 }
 
+/* ── Dark overlay ── */
 .video-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: radial-gradient(circle at center, rgba(6, 10, 15, 0.15), rgba(6, 10, 15, 0.65)),
-              linear-gradient(to bottom, rgba(0, 20, 40, 0.3), rgba(6, 10, 15, 0.8));
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(6, 10, 15, 0.2),
+      rgba(6, 10, 15, 0.7)
+    ),
+    linear-gradient(to bottom, rgba(0, 20, 40, 0.3), rgba(6, 10, 15, 0.85));
 }
 
+/* ── Glassmorphism Login Box ── */
 .login-box {
   position: relative;
   z-index: 2;
-  width: 380px;
-  padding: 40px;
-  background: rgba(12, 19, 32, 0.6);
-  backdrop-filter: blur(14px);
+  width: 400px;
+  padding: 44px;
+  background: rgba(12, 19, 32, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--shadow-box);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
 }
 
+/* Gold top-accent */
+.login-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ── Title ── */
 .login-title {
   font-family: var(--font-display);
   color: var(--gold);
-  font-size: 2.3rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-xs);
 }
 
 .login-sub {
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 25px;
+  margin-bottom: var(--space-xl);
+  line-height: 1.5;
 }
 
+/* ── Form ── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Input Group (shared by login & register) ── */
 .input-group {
   margin-bottom: 18px;
 }
 
 .input-group label {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 5px;
   display: block;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 12px;
-  background: transparent;
+  padding: 12px 14px;
+  background: rgba(6, 10, 15, 0.6);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color var(--t-base),
+    box-shadow var(--t-base);
 }
 
 .input-group input:focus {
-  outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 8px rgba(208, 169, 63, 0.4);
+  box-shadow: 0 0 10px rgba(208, 169, 63, 0.3);
 }
 
+.input-group input::placeholder {
+  color: rgba(122, 138, 154, 0.5);
+}
+
+/* ── Submit Button ── */
+.login-form .btn-login,
+.login-form button[type="submit"] {
+  width: 100%;
+  margin-top: var(--space-sm);
+  padding: 13px;
+}
+
+/* ── Error / Success text ── */
 .error-text {
   color: var(--red-alert);
-  margin-top: 10px;
-  font-size: 0.85rem;
+  margin-top: var(--space-sm);
+  font-size: 0.84rem;
   text-align: center;
+  font-family: var(--font-ui);
 }
 
+/* ── Register link ── */
 .register-link {
-  margin-top: 20px;
+  margin-top: var(--space-lg);
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
 }
 
 .register-link a {
   color: var(--gold);
+  transition: color var(--t-fast);
 }
 
-@keyframes slowZoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+.register-link a:hover {
+  color: var(--gold-light);
 }
 
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .login-box {
-    width: 90%;
-    padding: 30px;
+    width: 92%;
+    padding: 32px var(--space-xl);
   }
 }

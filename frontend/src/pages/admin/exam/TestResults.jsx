@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAllAttempts, getAttemptsByTest } from "../../../services/examService";
+import {
+  getAllAttempts,
+  getAttemptsByTest,
+} from "../../../services/examService";
 import { getAllTests } from "../../../services/examService";
 import { getAllUsers } from "../../../services/userService";
 
@@ -10,14 +13,14 @@ export default function TestResults() {
   const [selectedTestId, setSelectedTestId] = useState("");
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState("attempts"); // "attempts" or "aspirants"
-  
+
   const [stats, setStats] = useState({
     totalAttempts: 0,
     totalAspirants: 0,
     averageScore: 0,
     highestScore: 0,
     lowestScore: 100,
-    passRate: 0
+    passRate: 0,
   });
 
   const [aspirantStats, setAspirantStats] = useState([]);
@@ -43,11 +46,11 @@ export default function TestResults() {
   const calculateAspirantStats = (attemptsData) => {
     // Group attempts by user
     const userMap = new Map();
-    
-    attemptsData.forEach(attempt => {
+
+    attemptsData.forEach((attempt) => {
       const userId = attempt.user?.id;
       if (!userId) return;
-      
+
       if (!userMap.has(userId)) {
         userMap.set(userId, {
           userId: userId,
@@ -57,54 +60,69 @@ export default function TestResults() {
           totalScore: 0,
           totalPossibleScore: 0,
           bestScore: 0,
-          attemptsList: []
+          attemptsList: [],
         });
       }
-      
+
       const userStats = userMap.get(userId);
       userStats.totalAttempts++;
       userStats.totalScore += attempt.score || 0;
       userStats.totalPossibleScore += attempt.test?.totalMarks || 0;
-      userStats.bestScore = Math.max(userStats.bestScore, attempt.percentage || 0);
+      userStats.bestScore = Math.max(
+        userStats.bestScore,
+        attempt.percentage || 0,
+      );
       userStats.attemptsList.push(attempt);
     });
-    
+
     // Calculate averages and convert to array
-    const aspirantArray = Array.from(userMap.values()).map(user => ({
-      ...user,
-      averagePercentage: user.totalPossibleScore > 0 
-        ? Math.round((user.totalScore / user.totalPossibleScore) * 100) 
-        : 0
-    })).sort((a, b) => b.averagePercentage - a.averagePercentage);
-    
+    const aspirantArray = Array.from(userMap.values())
+      .map((user) => ({
+        ...user,
+        averagePercentage:
+          user.totalPossibleScore > 0
+            ? Math.round((user.totalScore / user.totalPossibleScore) * 100)
+            : 0,
+      }))
+      .sort((a, b) => b.averagePercentage - a.averagePercentage);
+
     setAspirantStats(aspirantArray);
   };
 
   const calculateStats = (data) => {
     if (data.length === 0) {
-      setStats({ totalAttempts: 0, totalAspirants: 0, averageScore: 0, highestScore: 0, lowestScore: 100, passRate: 0 });
+      setStats({
+        totalAttempts: 0,
+        totalAspirants: 0,
+        averageScore: 0,
+        highestScore: 0,
+        lowestScore: 100,
+        passRate: 0,
+      });
       setAspirantStats([]);
       return;
     }
-    
-    const scores = data.map(a => a.percentage || 0);
-    const uniqueAspirants = new Set(data.map(a => a.user?.id)).size;
+
+    const scores = data.map((a) => a.percentage || 0);
+    const uniqueAspirants = new Set(data.map((a) => a.user?.id)).size;
     const totalAttempts = data.length;
-    const averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / totalAttempts);
+    const averageScore = Math.round(
+      scores.reduce((a, b) => a + b, 0) / totalAttempts,
+    );
     const highestScore = Math.max(...scores);
     const lowestScore = Math.min(...scores);
-    const passCount = scores.filter(s => s >= 40).length;
+    const passCount = scores.filter((s) => s >= 40).length;
     const passRate = Math.round((passCount / totalAttempts) * 100);
-    
-    setStats({ 
-      totalAttempts, 
-      totalAspirants: uniqueAspirants, 
-      averageScore, 
-      highestScore, 
-      lowestScore, 
-      passRate 
+
+    setStats({
+      totalAttempts,
+      totalAspirants: uniqueAspirants,
+      averageScore,
+      highestScore,
+      lowestScore,
+      passRate,
     });
-    
+
     calculateAspirantStats(data);
   };
 
@@ -150,7 +168,7 @@ export default function TestResults() {
   };
 
   const getTestName = (testId) => {
-    const test = tests.find(t => t.id === testId);
+    const test = tests.find((t) => t.id === testId);
     return test?.title || "Unknown Test";
   };
 
@@ -162,15 +180,17 @@ export default function TestResults() {
       <div className="admin-section">
         <h3>🔍 Filter by Test</h3>
         <div className="flex-row">
-          <select 
-            className="admin-input" 
-            value={selectedTestId} 
+          <select
+            className="admin-input"
+            value={selectedTestId}
             onChange={(e) => handleTestFilter(e.target.value)}
             style={{ minWidth: "250px" }}
           >
             <option value="">All Tests</option>
-            {tests.map(t => (
-              <option key={t.id} value={t.id}>{t.title}</option>
+            {tests.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.title}
+              </option>
             ))}
           </select>
           <span className="admin-badge">{stats.totalAttempts} attempts</span>
@@ -204,13 +224,13 @@ export default function TestResults() {
       {/* View Mode Toggle */}
       <div className="admin-section">
         <div className="flex-row">
-          <button 
+          <button
             className={`view-mode-btn ${viewMode === "attempts" ? "active" : ""}`}
             onClick={() => setViewMode("attempts")}
           >
             📋 By Attempts
           </button>
-          <button 
+          <button
             className={`view-mode-btn ${viewMode === "aspirants" ? "active" : ""}`}
             onClick={() => setViewMode("aspirants")}
           >
@@ -223,7 +243,9 @@ export default function TestResults() {
       {viewMode === "aspirants" && (
         <div className="admin-section">
           <h3>👨‍🎓 Aspirant Wise Performance</h3>
-          <p className="admin-sub">Each aspirant's total attempts, average score, and best performance</p>
+          <p className="admin-sub">
+            Each aspirant's total attempts, average score, and best performance
+          </p>
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
@@ -241,24 +263,35 @@ export default function TestResults() {
                 {aspirantStats.map((asp, index) => (
                   <tr key={asp.userId}>
                     <td>{index + 1}</td>
-                    <td><strong>{asp.userName}</strong></td>
+                    <td>
+                      <strong>{asp.userName}</strong>
+                    </td>
                     <td>{asp.userEmail}</td>
                     <td>{asp.totalAttempts}</td>
                     <td>
-                      <span className={`percentage-badge ${asp.averagePercentage >= 40 ? 'pass' : 'fail'}`}>
+                      <span
+                        className={`percentage-badge ${asp.averagePercentage >= 40 ? "pass" : "fail"}`}
+                      >
                         {asp.averagePercentage}%
                       </span>
                     </td>
                     <td>{asp.bestScore}%</td>
                     <td>
                       <div className="performance-bar">
-                        <div className="performance-fill" style={{ width: `${asp.averagePercentage}%` }}></div>
+                        <div
+                          className="performance-fill"
+                          style={{ width: `${asp.averagePercentage}%` }}
+                        ></div>
                       </div>
                     </td>
                   </tr>
                 ))}
                 {aspirantStats.length === 0 && !loading && (
-                  <tr><td colSpan="7" style={{ textAlign: "center" }}>No aspirants have taken any test yet</td></tr>
+                  <tr>
+                    <td colSpan="7" style={{ textAlign: "center" }}>
+                      No aspirants have taken any test yet
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
@@ -284,23 +317,41 @@ export default function TestResults() {
                 </tr>
               </thead>
               <tbody>
-                {attempts.map(attempt => (
+                {attempts.map((attempt) => (
                   <tr key={attempt.id}>
                     <td>{attempt.id}</td>
-                    <td><strong>{attempt.user?.name || "Unknown"}</strong></td>
-                    <td>{getTestName(attempt.test?.id)}</td>
-                    <td>{attempt.score}/{attempt.test?.totalMarks || "—"}</td>
                     <td>
-                      <span className={`percentage-badge ${(attempt.percentage || 0) >= 40 ? 'pass' : 'fail'}`}>
+                      <strong>{attempt.user?.name || "Unknown"}</strong>
+                    </td>
+                    <td>{getTestName(attempt.test?.id)}</td>
+                    <td>
+                      {attempt.score}/{attempt.test?.totalMarks || "—"}
+                    </td>
+                    <td>
+                      <span
+                        className={`percentage-badge ${(attempt.percentage || 0) >= 40 ? "pass" : "fail"}`}
+                      >
                         {attempt.percentage || 0}%
                       </span>
                     </td>
-                    <td>{(attempt.percentage || 0) >= 40 ? "✅ Passed" : "❌ Failed"}</td>
-                    <td>{attempt.completedAt ? new Date(attempt.completedAt).toLocaleString() : "—"}</td>
+                    <td>
+                      {(attempt.percentage || 0) >= 40
+                        ? "✅ Passed"
+                        : "❌ Failed"}
+                    </td>
+                    <td>
+                      {attempt.completedAt
+                        ? new Date(attempt.completedAt).toLocaleString()
+                        : "—"}
+                    </td>
                   </tr>
                 ))}
                 {attempts.length === 0 && !loading && (
-                  <tr><td colSpan="7" style={{ textAlign: "center" }}>No test attempts yet</td></tr>
+                  <tr>
+                    <td colSpan="7" style={{ textAlign: "center" }}>
+                      No test attempts yet
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

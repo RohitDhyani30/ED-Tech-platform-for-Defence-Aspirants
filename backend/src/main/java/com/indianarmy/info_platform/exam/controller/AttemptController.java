@@ -3,6 +3,8 @@ package com.indianarmy.info_platform.exam.controller;
 import com.indianarmy.info_platform.exam.entity.Attempt;
 import com.indianarmy.info_platform.exam.service.AttemptService;
 import com.indianarmy.info_platform.security.JwtService;
+import com.indianarmy.info_platform.user.entity.User;
+import com.indianarmy.info_platform.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +20,16 @@ public class AttemptController {
 
     private final AttemptService attemptService;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
     @PostMapping("/start")
     public Attempt startAttempt(@RequestParam Long testId, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         String email = jwtService.extractEmail(token);
-        // Get user by email (you'll need to add this method to UserRepository)
-        Long userId = 1L; // TODO: Get actual user ID from email
-        return attemptService.startAttempt(userId, testId);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return attemptService.startAttempt(user.getId(), testId);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")
@@ -40,8 +43,12 @@ public class AttemptController {
     public List<Attempt> getMyAttempts(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         String email = jwtService.extractEmail(token);
-        Long userId = 1L; // TODO: Get actual user ID from email
-        return attemptService.getUserAttempts(userId);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        // Only return completed attempts (completedAt is not null)
+        return attemptService.getUserAttempts(user.getId()).stream()
+                .filter(a -> a.getCompletedAt() != null)
+                .toList();
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all-attempts")

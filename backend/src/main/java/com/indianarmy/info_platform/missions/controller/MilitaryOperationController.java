@@ -2,6 +2,7 @@ package com.indianarmy.info_platform.missions.controller;
 
 import com.indianarmy.info_platform.missions.entity.MilitaryOperation;
 import com.indianarmy.info_platform.missions.service.MilitaryOperationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +49,13 @@ public class MilitaryOperationController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteOperation(@PathVariable Long id) {
-        service.deleteOperation(id);
-        return "Operation deleted successfully";
+    public ResponseEntity<?> deleteOperation(@PathVariable Long id) {
+        try {
+            service.deleteOperation(id);
+            return ResponseEntity.ok().body("Operation deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")

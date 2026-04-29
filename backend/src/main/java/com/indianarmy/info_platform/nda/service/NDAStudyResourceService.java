@@ -45,7 +45,10 @@ public class NDAStudyResourceService {
         return repository.save(existing);
     }
 
-    public void delete(@PathVariable Long id) {
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Resource not found");
+        }
         repository.deleteById(id);
     }
 

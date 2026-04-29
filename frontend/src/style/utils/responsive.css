@@ -1,24 +1,65 @@
-/* Responsive Utilities */
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE — Global breakpoint overrides
+   Component-level responsive rules stay in their files.
+   This handles global layout shifts only.
+══════════════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
-  .hide-tablet {
+  /* Sidebar collapse hint */
+  .portal-sidebar {
+    width: 72px;
+  }
+  .nav-label {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .hide-mobile {
+  /* Portal layout stacks */
+  .portal-root {
+    flex-direction: column;
+  }
+  .portal-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .portal-nav {
+    flex-direction: row;
+    padding: 0;
+  }
+  .portal-nav-link {
+    padding: var(--space-sm) var(--space-md);
+  }
+  .portal-sidebar-toggle {
     display: none;
   }
-  
-  .container {
-    padding-left: 20px;
-    padding-right: 20px;
+  .sidebar-footer {
+    display: none;
   }
-}
 
-@media (max-width: 480px) {
-  .hide-small {
-    display: none;
+  /* Command layout */
+  .command-body {
+    flex-direction: column;
+  }
+  .command-sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .command-sidebar.collapsed {
+    width: 100%;
+    height: 0;
+  }
+
+  /* Content padding */
+  .portal-content {
+    padding: var(--space-md);
+  }
+  .command-main {
+    padding: var(--space-md);
   }
 }

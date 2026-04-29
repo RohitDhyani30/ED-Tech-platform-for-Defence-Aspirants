@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllTests, createTest, deleteTest, addQuestionsToTest } from "../../../services/examService";
+import {
+  getAllTests,
+  createTest,
+  deleteTest,
+  addQuestionsToTest,
+} from "../../../services/examService";
 import { getAllQuestions } from "../../../services/examService";
 import { getSubjects } from "../../../services/ndaService";
 
@@ -16,7 +21,7 @@ export default function ExamManager() {
     title: "",
     description: "",
     durationMinutes: 60,
-    subject: { id: "" }
+    subject: { id: "" },
   });
 
   const loadData = async () => {
@@ -25,7 +30,7 @@ export default function ExamManager() {
       const [testsRes, questionsRes, subjectsRes] = await Promise.all([
         getAllTests(),
         getAllQuestions(),
-        getSubjects()
+        getSubjects(),
       ]);
       setTests(testsRes.data || []);
       setQuestions(questionsRes.data || []);
@@ -37,7 +42,9 @@ export default function ExamManager() {
     }
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const handleCreateTest = async (e) => {
     e.preventDefault();
@@ -48,7 +55,12 @@ export default function ExamManager() {
 
     try {
       await createTest(form);
-      setForm({ title: "", description: "", durationMinutes: 60, subject: { id: "" } });
+      setForm({
+        title: "",
+        description: "",
+        durationMinutes: 60,
+        subject: { id: "" },
+      });
       loadData();
     } catch (err) {
       alert(err.response?.data || "Failed to create test");
@@ -81,8 +93,10 @@ export default function ExamManager() {
   };
 
   const toggleQuestionSelection = (questionId) => {
-    setSelectedQuestions(prev =>
-      prev.includes(questionId) ? prev.filter(id => id !== questionId) : [...prev, questionId]
+    setSelectedQuestions((prev) =>
+      prev.includes(questionId)
+        ? prev.filter((id) => id !== questionId)
+        : [...prev, questionId],
     );
   };
 
@@ -96,43 +110,55 @@ export default function ExamManager() {
         <form onSubmit={handleCreateTest} className="admin-form-grid">
           <div className="admin-field admin-field-span">
             <label>Test Title *</label>
-            <input 
-              placeholder="e.g., NDA Mathematics Mock Test 1" 
-              value={form.title} 
-              onChange={(e) => setForm({...form, title: e.target.value})} 
-              required 
+            <input
+              placeholder="e.g., NDA Mathematics Mock Test 1"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              required
             />
           </div>
           <div className="admin-field admin-field-span">
             <label>Description</label>
-            <textarea 
-              rows="2" 
-              placeholder="Describe the test..." 
-              value={form.description} 
-              onChange={(e) => setForm({...form, description: e.target.value})} 
+            <textarea
+              rows="2"
+              placeholder="Describe the test..."
+              value={form.description}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
             />
           </div>
           <div className="admin-field">
             <label>Subject *</label>
-            <select 
-              value={form.subject.id} 
-              onChange={(e) => setForm({...form, subject: { id: e.target.value }})}
+            <select
+              value={form.subject.id}
+              onChange={(e) =>
+                setForm({ ...form, subject: { id: e.target.value } })
+              }
             >
               <option value="">Select Subject</option>
-              {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {subjects.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className="admin-field">
             <label>Duration (minutes)</label>
-            <input 
-              type="number" 
-              min="1" 
-              value={form.durationMinutes} 
-              onChange={(e) => setForm({...form, durationMinutes: parseInt(e.target.value)})} 
+            <input
+              type="number"
+              min="1"
+              value={form.durationMinutes}
+              onChange={(e) =>
+                setForm({ ...form, durationMinutes: parseInt(e.target.value) })
+              }
             />
           </div>
           <div className="admin-form-actions">
-            <button type="submit" className="admin-btn admin-btn-primary">Create Test</button>
+            <button type="submit" className="admin-btn admin-btn-primary">
+              Create Test
+            </button>
           </div>
         </form>
       </div>
@@ -153,25 +179,38 @@ export default function ExamManager() {
               </tr>
             </thead>
             <tbody>
-              {tests.map(t => (
+              {tests.map((t) => (
                 <tr key={t.id}>
                   <td>{t.id}</td>
                   <td>
                     <strong>{t.title}</strong>
-                    <br/><small>{t.description?.substring(0, 50)}</small>
+                    <br />
+                    <small>{t.description?.substring(0, 50)}</small>
                   </td>
                   <td>{t.subject?.name || "—"}</td>
                   <td>{t.durationMinutes} min</td>
                   <td>{t.questions?.length || 0}</td>
                   <td>
-                    <button className="btn btn-edit" onClick={() => setShowAddQuestions(t)}>Add Qs</button>
-                    <button className="btn btn-delete" onClick={() => handleDeleteTest(t.id, t.title)}>Delete</button>
+                    <button
+                      className="btn btn-edit"
+                      onClick={() => setShowAddQuestions(t)}
+                    >
+                      Add Qs
+                    </button>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => handleDeleteTest(t.id, t.title)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
               {tests.length === 0 && (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>No tests created yet</td>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    No tests created yet
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -181,27 +220,47 @@ export default function ExamManager() {
 
       {/* Add Questions Modal */}
       {showAddQuestions && (
-        <div className="modal-overlay" onClick={() => setShowAddQuestions(null)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowAddQuestions(null)}
+        >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Add Questions to: {showAddQuestions.title}</h3>
             <div className="modal-questions-list">
-              {questions.filter(q => q.subject?.id === showAddQuestions.subject?.id).map(q => (
-                <label key={q.id} className="modal-question-item">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedQuestions.includes(q.id)} 
-                    onChange={() => toggleQuestionSelection(q.id)} 
-                  />
-                  <span>{q.text?.substring(0, 100)}...</span>
-                </label>
-              ))}
-              {questions.filter(q => q.subject?.id === showAddQuestions.subject?.id).length === 0 && (
-                <p>No questions available for this subject. Create questions in Question Bank first.</p>
+              {questions
+                .filter((q) => q.subject?.id === showAddQuestions.subject?.id)
+                .map((q) => (
+                  <label key={q.id} className="modal-question-item">
+                    <input
+                      type="checkbox"
+                      checked={selectedQuestions.includes(q.id)}
+                      onChange={() => toggleQuestionSelection(q.id)}
+                    />
+                    <span>{q.text?.substring(0, 100)}...</span>
+                  </label>
+                ))}
+              {questions.filter(
+                (q) => q.subject?.id === showAddQuestions.subject?.id,
+              ).length === 0 && (
+                <p>
+                  No questions available for this subject. Create questions in
+                  Question Bank first.
+                </p>
               )}
             </div>
             <div className="modal-actions">
-              <button className="btn btn-add" onClick={() => handleAddQuestions(showAddQuestions.id)}>Add Selected</button>
-              <button className="btn btn-edit" onClick={() => setShowAddQuestions(null)}>Cancel</button>
+              <button
+                className="btn btn-add"
+                onClick={() => handleAddQuestions(showAddQuestions.id)}
+              >
+                Add Selected
+              </button>
+              <button
+                className="btn btn-edit"
+                onClick={() => setShowAddQuestions(null)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>

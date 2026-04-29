@@ -31,25 +31,25 @@ export default function MyResults() {
     let filtered = [...attempts];
 
     if (searchTerm) {
-      filtered = filtered.filter(a => 
-        a.test?.title?.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter((a) =>
+        a.test?.title?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     if (statusFilter === "pass") {
-      filtered = filtered.filter(a => (a.percentage || 0) >= 40);
+      filtered = filtered.filter((a) => (a.percentage || 0) >= 40);
     } else if (statusFilter === "fail") {
-      filtered = filtered.filter(a => (a.percentage || 0) < 40);
+      filtered = filtered.filter((a) => (a.percentage || 0) < 40);
     }
 
     if (dateFrom) {
-      filtered = filtered.filter(a => 
-        a.completedAt && new Date(a.completedAt) >= new Date(dateFrom)
+      filtered = filtered.filter(
+        (a) => a.completedAt && new Date(a.completedAt) >= new Date(dateFrom),
       );
     }
     if (dateTo) {
-      filtered = filtered.filter(a => 
-        a.completedAt && new Date(a.completedAt) <= new Date(dateTo)
+      filtered = filtered.filter(
+        (a) => a.completedAt && new Date(a.completedAt) <= new Date(dateTo),
       );
     }
 
@@ -62,11 +62,25 @@ export default function MyResults() {
     doc.text("Test Result", 14, 20);
     doc.setFontSize(12);
     doc.text(`Test: ${attempt.test?.title || "Unknown Test"}`, 14, 40);
-    doc.text(`Date: ${attempt.completedAt ? new Date(attempt.completedAt).toLocaleString() : "--"}`, 14, 50);
-    doc.text(`Score: ${attempt.score} / ${attempt.test?.totalMarks || 0}`, 14, 60);
+    doc.text(
+      `Date: ${attempt.completedAt ? new Date(attempt.completedAt).toLocaleString() : "--"}`,
+      14,
+      50,
+    );
+    doc.text(
+      `Score: ${attempt.score} / ${attempt.test?.totalMarks || 0}`,
+      14,
+      60,
+    );
     doc.text(`Percentage: ${attempt.percentage}%`, 14, 70);
-    doc.text(`Status: ${(attempt.percentage || 0) >= 40 ? "PASSED" : "FAILED"}`, 14, 80);
-    doc.save(`test_result_${attempt.test?.title || "attempt"}_${attempt.id}.pdf`);
+    doc.text(
+      `Status: ${(attempt.percentage || 0) >= 40 ? "PASSED" : "FAILED"}`,
+      14,
+      80,
+    );
+    doc.save(
+      `test_result_${attempt.test?.title || "attempt"}_${attempt.id}.pdf`,
+    );
   };
 
   const exportAllToPDF = () => {
@@ -75,16 +89,16 @@ export default function MyResults() {
     doc.text("All Test Results", 14, 20);
     doc.setFontSize(10);
     doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
-    
+
     const tableData = filteredAttempts.map((a, idx) => [
       idx + 1,
       a.test?.title || "Unknown",
       a.completedAt ? new Date(a.completedAt).toLocaleDateString() : "--",
       `${a.score}/${a.test?.totalMarks || 0}`,
       `${a.percentage}%`,
-      (a.percentage || 0) >= 40 ? "Pass" : "Fail"
+      (a.percentage || 0) >= 40 ? "Pass" : "Fail",
     ]);
-    
+
     doc.autoTable({
       startY: 40,
       head: [["#", "Test Name", "Date", "Score", "Percentage", "Status"]],
@@ -92,7 +106,7 @@ export default function MyResults() {
       theme: "striped",
       headStyles: { fillColor: [208, 169, 63] },
     });
-    
+
     doc.save("all_my_results.pdf");
   };
 
@@ -114,44 +128,61 @@ export default function MyResults() {
 
       {filteredAttempts.length > 0 && (
         <div className="flex-right">
-          <button onClick={exportAllToPDF} className="btn-primary">Export All to PDF</button>
+          <button onClick={exportAllToPDF} className="btn btn-primary">
+            Export All to PDF
+          </button>
         </div>
       )}
 
       {/* Filters */}
       <div className="filters-bar">
-      <div className="filter-grid">
-        <div className="filter-item">
-          <label>Search Test Name</label>
-          <input
-            type="text"
-            placeholder="Enter test name..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <div className="filter-grid">
+          <div className="filter-item">
+            <label>Search Test Name</label>
+            <input
+              type="text"
+              placeholder="Enter test name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="filter-item">
+            <label>Status</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="pass">Passed Only</option>
+              <option value="fail">Failed Only</option>
+            </select>
+          </div>
+          <div className="filter-item">
+            <label>From Date</label>
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+            />
+          </div>
+          <div className="filter-item">
+            <label>To Date</label>
+            <input
+              type="date"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="filter-item">
-          <label>Status</label>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-            <option value="all">All</option>
-            <option value="pass">Passed Only</option>
-            <option value="fail">Failed Only</option>
-          </select>
-        </div>
-        <div className="filter-item">
-          <label>From Date</label>
-          <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-        </div>
-        <div className="filter-item">
-          <label>To Date</label>
-          <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+        <div className="filter-actions">
+          <button onClick={clearFilters} className="btn btn-secondary btn-sm">
+            Clear Filters
+          </button>
+          <span className="filter-count">
+            {filteredAttempts.length} of {attempts.length} results shown
+          </span>
         </div>
       </div>
-      <div className="filter-actions">
-        <button onClick={clearFilters} className="btn-secondary btn-sm">Clear Filters</button>
-        <span className="filter-count">{filteredAttempts.length} of {attempts.length} results shown</span>
-      </div>
-    </div>
 
       {/* Results Table */}
       {filteredAttempts.length === 0 ? (
@@ -172,17 +203,32 @@ export default function MyResults() {
               </tr>
             </thead>
             <tbody>
-              {filteredAttempts.map(attempt => (
+              {filteredAttempts.map((attempt) => (
                 <tr key={attempt.id}>
                   <td>{attempt.test?.title || "Unknown Test"}</td>
-                  <td>{attempt.score} / {attempt.test?.totalMarks || 0}</td>
+                  <td>
+                    {attempt.score} / {attempt.test?.totalMarks || 0}
+                  </td>
                   <td>{attempt.percentage}%</td>
-                  <td className={attempt.percentage >= 40 ? "status-pass" : "status-fail"}>
+                  <td
+                    className={
+                      attempt.percentage >= 40 ? "status-pass" : "status-fail"
+                    }
+                  >
                     {attempt.percentage >= 40 ? "PASSED" : "FAILED"}
                   </td>
-                  <td>{attempt.completedAt ? new Date(attempt.completedAt).toLocaleDateString() : "--"}</td>
                   <td>
-                    <button onClick={() => exportToPDF(attempt)} className="btn-small">Export PDF</button>
+                    {attempt.completedAt
+                      ? new Date(attempt.completedAt).toLocaleDateString()
+                      : "--"}
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => exportToPDF(attempt)}
+                      className="btn btn-outline btn-small"
+                    >
+                      Export PDF
+                    </button>
                   </td>
                 </tr>
               ))}

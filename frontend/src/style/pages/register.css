@@ -1,4 +1,7 @@
-/* Register Page */
+/* ══════════════════════════════════════════════════════
+   REGISTER PAGE — Mirrors login page glass aesthetic
+   Re-uses: .bg-video, .video-overlay, .input-group (from login.css)
+══════════════════════════════════════════════════════ */
 
 #register-page {
   position: relative;
@@ -9,61 +12,72 @@
   overflow: hidden;
 }
 
+/* ── Glassmorphism Register Box ── */
 .reg-box {
   position: relative;
   z-index: 2;
-  width: 380px;
-  padding: 40px;
-  background: rgba(12, 19, 32, 0.6);
-  backdrop-filter: blur(14px);
+  width: 420px;
+  padding: 44px;
+  background: rgba(12, 19, 32, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--shadow-box);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
 }
 
+.reg-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ── Title / Sub ── */
 .reg-title {
   font-family: var(--font-display);
   color: var(--gold);
-  font-size: 2.3rem;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--space-xs);
 }
 
 .reg-sub {
+  font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 25px;
+  margin-bottom: var(--space-xl);
+  line-height: 1.5;
 }
 
+/* ── Submit ── */
 .reg-btn {
   width: 100%;
-  margin-top: 20px;
-  padding: 12px;
-  background: var(--gold);
-  border: none;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  cursor: pointer;
+  margin-top: var(--space-sm);
+  padding: 13px;
 }
 
-.reg-btn:hover {
-  background: var(--gold-light);
-}
-
-.reg-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
+/* ── Success ── */
 .success-text {
   color: #4caf50;
-  margin-top: 10px;
+  margin-top: var(--space-sm);
+  font-size: 0.84rem;
   text-align: center;
+  font-family: var(--font-ui);
 }
 
 @media (max-width: 768px) {
   .reg-box {
-    width: 90%;
-    padding: 30px;
+    width: 92%;
+    padding: 32px var(--space-xl);
   }
 }

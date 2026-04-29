@@ -55,7 +55,7 @@
 
 .toggle-btn {
   background: transparent;
-  border: 1px solid rgba(208,169,63,0.4);
+  border: 1px solid rgba(208, 169, 63, 0.4);
   color: var(--gold);
   cursor: pointer;
   padding: 4px 10px;
@@ -87,12 +87,12 @@
 }
 
 .nav-link:hover {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text-primary);
 }
 
 .nav-link.active {
-  background: rgba(208,169,63,0.12);
+  background: rgba(208, 169, 63, 0.12);
   color: var(--gold);
   border-left: 3px solid var(--gold);
 }
@@ -119,7 +119,7 @@
   width: 100%;
   padding: 12px 16px;
   background: transparent;
-  border: 1px solid rgba(184,50,50,0.3);
+  border: 1px solid rgba(184, 50, 50, 0.3);
   border-radius: 8px;
   color: var(--red-alert);
   cursor: pointer;
@@ -130,7 +130,7 @@
 }
 
 .logout-btn:hover {
-  background: rgba(184,50,50,0.1);
+  background: rgba(184, 50, 50, 0.1);
   border-color: var(--red-alert);
 }
 
@@ -179,7 +179,7 @@
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   color: var(--text-muted);
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   padding: 6px 14px;
   border-radius: 20px;
 }
@@ -208,7 +208,7 @@
 }
 
 .stat-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -221,7 +221,7 @@
 
 .stat-card:hover {
   transform: translateY(-3px);
-  border-color: rgba(208,169,63,0.4);
+  border-color: rgba(208, 169, 63, 0.4);
 }
 
 .stat-card:hover::before {
@@ -302,7 +302,7 @@
 
 .mission-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(208,169,63,0.3);
+  border-color: rgba(208, 169, 63, 0.3);
 }
 
 .mission-year {
@@ -349,7 +349,7 @@
 .action-card:hover {
   transform: translateY(-3px);
   border-color: var(--gold);
-  background: rgba(208,169,63,0.03);
+  background: rgba(208, 169, 63, 0.03);
 }
 
 .action-icon {
@@ -394,11 +394,11 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .results-table tr:hover {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .status-pass {
@@ -416,7 +416,7 @@
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .action-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -426,24 +426,195 @@
   .aspirant-sidebar {
     width: 80px;
   }
-  
+
   .aspirant-main {
     margin-left: 80px;
   }
-  
+
   .aspirant-content {
     padding: 20px;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .action-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .mission-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* SSB Preparation Page - Test Cards */
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.test-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.test-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.test-header h3 {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0;
+}
+
+.test-stage {
+  font-size: 0.65rem;
+  background: rgba(208, 169, 63, 0.15);
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: var(--gold);
+}
+
+.test-description {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.test-tips {
+  background: rgba(208, 169, 63, 0.08);
+  border-left: 3px solid var(--gold);
+  padding: 10px 15px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.test-tips strong {
+  color: var(--gold);
+}
+
+/* Resource Grid - Matching Study Materials */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.resource-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.resource-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.resource-title {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin: 0;
+  flex: 1;
+}
+
+.resource-type-badge {
+  font-size: 0.65rem;
+  padding: 4px 8px;
+  background: rgba(208, 169, 63, 0.15);
+  border-radius: 20px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.resource-description {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--gold);
+  color: #0a0f1c;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-top: auto;
+  text-align: center;
+}
+
+.resource-link:hover {
+  background: var(--gold-light);
+}
+
+/* Content Section */
+.content-section {
+  margin-bottom: 40px;
+}
+
+.content-section h2 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .test-grid,
+  .resource-grid {
     grid-template-columns: 1fr;
   }
 }

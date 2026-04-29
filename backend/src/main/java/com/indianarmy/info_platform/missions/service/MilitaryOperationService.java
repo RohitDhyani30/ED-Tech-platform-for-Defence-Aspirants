@@ -53,7 +53,7 @@ public class MilitaryOperationService {
 
     public void deleteOperation(Long id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Operation not found with id: " + id);
+            throw new RuntimeException("Operation not found");
         }
         repository.deleteById(id);
     }

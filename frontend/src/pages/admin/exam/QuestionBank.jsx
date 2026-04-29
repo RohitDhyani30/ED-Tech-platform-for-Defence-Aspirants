@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllQuestions, createQuestion, updateQuestion, deleteQuestion } from "../../../services/examService";
+import {
+  getAllQuestions,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+} from "../../../services/examService";
 import { getSubjects } from "../../../services/ndaService";
 
 export default function QuestionBank() {
@@ -17,14 +22,14 @@ export default function QuestionBank() {
     correctAnswer: "A",
     difficulty: "MEDIUM",
     marks: 1,
-    subject: { id: "" }
+    subject: { id: "" },
   });
 
   const loadData = async () => {
     try {
       const [questionsRes, subjectsRes] = await Promise.all([
         getAllQuestions(),
-        getSubjects()
+        getSubjects(),
       ]);
       setQuestions(questionsRes.data || []);
       setSubjects(subjectsRes.data || []);
@@ -33,7 +38,9 @@ export default function QuestionBank() {
     }
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const resetForm = () => {
     setForm({
@@ -45,7 +52,7 @@ export default function QuestionBank() {
       correctAnswer: "A",
       difficulty: "MEDIUM",
       marks: 1,
-      subject: { id: "" }
+      subject: { id: "" },
     });
     setEditingQuestion(null);
     setShowForm(false);
@@ -53,7 +60,13 @@ export default function QuestionBank() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.text || !form.optionA || !form.optionB || !form.optionC || !form.optionD) {
+    if (
+      !form.text ||
+      !form.optionA ||
+      !form.optionB ||
+      !form.optionC ||
+      !form.optionD
+    ) {
       alert("Please fill all fields");
       return;
     }
@@ -98,7 +111,7 @@ export default function QuestionBank() {
       correctAnswer: q.correctAnswer,
       difficulty: q.difficulty,
       marks: q.marks,
-      subject: { id: q.subject?.id || "" }
+      subject: { id: q.subject?.id || "" },
     });
     setShowForm(true);
   };
@@ -108,7 +121,10 @@ export default function QuestionBank() {
       <h2>📝 Question Bank</h2>
 
       <div className="admin-section">
-        <button className="admin-btn admin-btn-primary" onClick={() => setShowForm(!showForm)}>
+        <button
+          className="admin-btn admin-btn-primary"
+          onClick={() => setShowForm(!showForm)}
+        >
           {showForm ? "− Hide Form" : "+ Add New Question"}
         </button>
       </div>
@@ -119,34 +135,109 @@ export default function QuestionBank() {
           <form onSubmit={handleSubmit} className="admin-form-grid">
             <div className="admin-field admin-field-span">
               <label>Question</label>
-              <textarea rows="3" value={form.text} onChange={(e) => setForm({...form, text: e.target.value})} required />
+              <textarea
+                rows="3"
+                value={form.text}
+                onChange={(e) => setForm({ ...form, text: e.target.value })}
+                required
+              />
             </div>
-            <div className="admin-field"><label>Option A</label><input value={form.optionA} onChange={(e) => setForm({...form, optionA: e.target.value})} required /></div>
-            <div className="admin-field"><label>Option B</label><input value={form.optionB} onChange={(e) => setForm({...form, optionB: e.target.value})} required /></div>
-            <div className="admin-field"><label>Option C</label><input value={form.optionC} onChange={(e) => setForm({...form, optionC: e.target.value})} required /></div>
-            <div className="admin-field"><label>Option D</label><input value={form.optionD} onChange={(e) => setForm({...form, optionD: e.target.value})} required /></div>
-            <div className="admin-field"><label>Correct Answer</label>
-              <select value={form.correctAnswer} onChange={(e) => setForm({...form, correctAnswer: e.target.value})}>
-                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+            <div className="admin-field">
+              <label>Option A</label>
+              <input
+                value={form.optionA}
+                onChange={(e) => setForm({ ...form, optionA: e.target.value })}
+                required
+              />
+            </div>
+            <div className="admin-field">
+              <label>Option B</label>
+              <input
+                value={form.optionB}
+                onChange={(e) => setForm({ ...form, optionB: e.target.value })}
+                required
+              />
+            </div>
+            <div className="admin-field">
+              <label>Option C</label>
+              <input
+                value={form.optionC}
+                onChange={(e) => setForm({ ...form, optionC: e.target.value })}
+                required
+              />
+            </div>
+            <div className="admin-field">
+              <label>Option D</label>
+              <input
+                value={form.optionD}
+                onChange={(e) => setForm({ ...form, optionD: e.target.value })}
+                required
+              />
+            </div>
+            <div className="admin-field">
+              <label>Correct Answer</label>
+              <select
+                value={form.correctAnswer}
+                onChange={(e) =>
+                  setForm({ ...form, correctAnswer: e.target.value })
+                }
+              >
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
               </select>
             </div>
-            <div className="admin-field"><label>Subject</label>
-              <select value={form.subject.id} onChange={(e) => setForm({...form, subject: { id: e.target.value }})}>
+            <div className="admin-field">
+              <label>Subject</label>
+              <select
+                value={form.subject.id}
+                onChange={(e) =>
+                  setForm({ ...form, subject: { id: e.target.value } })
+                }
+              >
                 <option value="">Select</option>
-                {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                {subjects.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="admin-field"><label>Difficulty</label>
-              <select value={form.difficulty} onChange={(e) => setForm({...form, difficulty: e.target.value})}>
-                <option value="EASY">Easy</option><option value="MEDIUM">Medium</option><option value="HARD">Hard</option>
+            <div className="admin-field">
+              <label>Difficulty</label>
+              <select
+                value={form.difficulty}
+                onChange={(e) =>
+                  setForm({ ...form, difficulty: e.target.value })
+                }
+              >
+                <option value="EASY">Easy</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HARD">Hard</option>
               </select>
             </div>
-            <div className="admin-field"><label>Marks</label>
-              <input type="number" value={form.marks} onChange={(e) => setForm({...form, marks: parseInt(e.target.value)})} />
+            <div className="admin-field">
+              <label>Marks</label>
+              <input
+                type="number"
+                value={form.marks}
+                onChange={(e) =>
+                  setForm({ ...form, marks: parseInt(e.target.value) })
+                }
+              />
             </div>
             <div className="admin-form-actions">
-              <button type="submit" className="admin-btn admin-btn-primary">{editingQuestion ? "Update" : "Save"}</button>
-              <button type="button" className="admin-btn admin-btn-secondary" onClick={resetForm}>Cancel</button>
+              <button type="submit" className="admin-btn admin-btn-primary">
+                {editingQuestion ? "Update" : "Save"}
+              </button>
+              <button
+                type="button"
+                className="admin-btn admin-btn-secondary"
+                onClick={resetForm}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>
@@ -156,16 +247,35 @@ export default function QuestionBank() {
         <h3>All Questions ({questions.length})</h3>
         <div className="admin-table-wrap">
           <table className="admin-table">
-            <thead><tr><th>ID</th><th>Question</th><th>Subject</th><th>Actions</th></tr></thead>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Subject</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
             <tbody>
-              {questions.map(q => (
+              {questions.map((q) => (
                 <tr key={q.id}>
                   <td>{q.id}</td>
-                  <td className="admin-cell-muted">{q.text?.substring(0, 80)}...</td>
+                  <td className="admin-cell-muted">
+                    {q.text?.substring(0, 80)}...
+                  </td>
                   <td>{q.subject?.name || "—"}</td>
                   <td>
-                    <button className="btn btn-edit" onClick={() => handleEdit(q)}>Edit</button>
-                    <button className="btn btn-delete" onClick={() => handleDelete(q.id)}>Delete</button>
+                    <button
+                      className="btn btn-edit"
+                      onClick={() => handleEdit(q)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => handleDelete(q.id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

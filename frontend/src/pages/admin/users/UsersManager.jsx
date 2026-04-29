@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, deleteUser, updateUserRole, getUserStats } from "../../../services/userService";
+import {
+  getAllUsers,
+  deleteUser,
+  updateUserRole,
+  getUserStats,
+} from "../../../services/userService";
 
 export default function UsersManager() {
   const [users, setUsers] = useState([]);
@@ -14,7 +19,7 @@ export default function UsersManager() {
     try {
       const [usersRes, statsRes] = await Promise.all([
         getAllUsers(),
-        getUserStats()
+        getUserStats(),
       ]);
       setUsers(usersRes.data || []);
       setStats(statsRes.data);
@@ -29,10 +34,13 @@ export default function UsersManager() {
     }
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const handleDeleteUser = async (id, name) => {
-    if (!window.confirm(`Delete user "${name}"? This action cannot be undone.`)) return;
+    if (!window.confirm(`Delete user "${name}"? This action cannot be undone.`))
+      return;
     try {
       await deleteUser(id);
       loadData();
@@ -52,9 +60,10 @@ export default function UsersManager() {
   };
 
   // Filter users by search
-  const filteredUsers = users.filter(user =>
-    user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading && users.length === 0) {
@@ -95,7 +104,7 @@ export default function UsersManager() {
       {/* Search Bar */}
       <div className="admin-section">
         <div className="flex-row">
-          <input 
+          <input
             type="text"
             className="admin-input"
             placeholder="🔍 Search by name or email..."
@@ -103,7 +112,9 @@ export default function UsersManager() {
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ flex: 1 }}
           />
-          <span className="admin-badge">{filteredUsers.length} users found</span>
+          <span className="admin-badge">
+            {filteredUsers.length} users found
+          </span>
         </div>
       </div>
 
@@ -123,39 +134,47 @@ export default function UsersManager() {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map(user => (
+              {filteredUsers.map((user) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
-                  <td><strong>{user.name}</strong></td>
+                  <td>
+                    <strong>{user.name}</strong>
+                  </td>
                   <td>{user.email}</td>
                   <td>
-                    <select 
-                      value={user.role} 
-                      onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                    <select
+                      value={user.role}
+                      onChange={(e) =>
+                        handleRoleChange(user.id, e.target.value)
+                      }
                       className="role-select"
                     >
                       <option value="ADMIN">👑 ADMIN</option>
                       <option value="ASPIRANT">🎓 ASPIRANT</option>
                     </select>
-                   </td>
+                  </td>
                   <td>
-                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "—"}
-                   </td>
+                    {user.createdAt
+                      ? new Date(user.createdAt).toLocaleDateString()
+                      : "—"}
+                  </td>
                   <td>
                     <div className="admin-table-actions">
-                      <button 
-                        className="btn btn-delete" 
+                      <button
+                        className="btn btn-delete"
                         onClick={() => handleDeleteUser(user.id, user.name)}
                       >
                         Delete
                       </button>
                     </div>
-                   </td>
-                 </tr>
+                  </td>
+                </tr>
               ))}
               {filteredUsers.length === 0 && (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
+                  <td colSpan="6" style={{ textAlign: "center" }}>
+                    No users found
+                  </td>
                 </tr>
               )}
             </tbody>

@@ -5,6 +5,7 @@ import com.indianarmy.info_platform.nda.entity.NDAStudyResource;
 import com.indianarmy.info_platform.nda.repository.NDAStudyResourceRepository;
 import com.indianarmy.info_platform.nda.service.NDAStudyResourceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +39,13 @@ public class NDAStudyResourceController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<?> deleteResource(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            return ResponseEntity.ok().body("Resource deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','ASPIRANT')")

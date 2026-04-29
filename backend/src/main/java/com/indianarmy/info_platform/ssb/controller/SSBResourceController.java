@@ -4,6 +4,7 @@ import com.indianarmy.info_platform.ssb.dto.SSBResourceResponse;
 import com.indianarmy.info_platform.ssb.entity.SSBResource;
 import com.indianarmy.info_platform.ssb.service.SSBResourceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +27,16 @@ public class SSBResourceController {
     @PostMapping
     public SSBResource create(@RequestBody SSBResource resource) {
         return service.create(resource);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteResource(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            return ResponseEntity.ok().body("Resource deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

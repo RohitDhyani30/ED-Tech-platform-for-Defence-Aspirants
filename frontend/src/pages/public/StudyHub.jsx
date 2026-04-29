@@ -1,5 +1,3 @@
-import "../../style/pages/public-pages.css";
-
 export default function StudyHub() {
   return (
     <div className="public-page">
@@ -115,12 +113,44 @@ export default function StudyHub() {
       <div className="content-section">
         <h2>Preparation Tips</h2>
         <div className="tips-grid">
-          <div className="tip-card"><span className="tip-number">01</span><h3>Understand Syllabus</h3><p>Download official syllabus and create a study plan covering all subjects.</p></div>
-          <div className="tip-card"><span className="tip-number">02</span><h3>Solve PYQs</h3><p>Solve at least 10 years of previous papers to understand exam pattern.</p></div>
-          <div className="tip-card"><span className="tip-number">03</span><h3>Mock Tests</h3><p>Take weekly mock tests and analyze your weak areas.</p></div>
-          <div className="tip-card"><span className="tip-number">04</span><h3>Physical Fitness</h3><p>Start preparing for SSB physical tests early.</p></div>
-          <div className="tip-card"><span className="tip-number">05</span><h3>Current Affairs</h3><p>Read newspapers daily, focus on defence news.</p></div>
-          <div className="tip-card"><span className="tip-number">06</span><h3>SSB Preparation</h3><p>Develop officer-like qualities (OLQs). Practice group discussions.</p></div>
+          <div className="tip-card">
+            <span className="tip-number">01</span>
+            <h3>Understand Syllabus</h3>
+            <p>
+              Download official syllabus and create a study plan covering all
+              subjects.
+            </p>
+          </div>
+          <div className="tip-card">
+            <span className="tip-number">02</span>
+            <h3>Solve PYQs</h3>
+            <p>
+              Solve at least 10 years of previous papers to understand exam
+              pattern.
+            </p>
+          </div>
+          <div className="tip-card">
+            <span className="tip-number">03</span>
+            <h3>Mock Tests</h3>
+            <p>Take weekly mock tests and analyze your weak areas.</p>
+          </div>
+          <div className="tip-card">
+            <span className="tip-number">04</span>
+            <h3>Physical Fitness</h3>
+            <p>Start preparing for SSB physical tests early.</p>
+          </div>
+          <div className="tip-card">
+            <span className="tip-number">05</span>
+            <h3>Current Affairs</h3>
+            <p>Read newspapers daily, focus on defence news.</p>
+          </div>
+          <div className="tip-card">
+            <span className="tip-number">06</span>
+            <h3>SSB Preparation</h3>
+            <p>
+              Develop officer-like qualities (OLQs). Practice group discussions.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -128,10 +158,30 @@ export default function StudyHub() {
       <div className="content-section">
         <h2>Recommended Books</h2>
         <div className="books-list">
-          <div className="book-item"><span>📘</span><div><strong>Pathfinder for NDA & NA Entrance</strong><p>Arihant Publications</p></div></div>
-          <div className="book-item"><span>📘</span><div><strong>Mathematics for NDA/NA</strong><p>R.S. Aggarwal</p></div></div>
-          <div className="book-item"><span>📘</span><div><strong>CDS Combined Defence Services Guide</strong><p>Kiran Prakashan</p></div></div>
-          <div className="book-item"><span>📘</span><div><strong>Lucent's General Knowledge</strong><p>Lucent Publication</p></div></div>
+          <div className="book-item">
+            <div>
+              <strong>Pathfinder for NDA &amp; NA Entrance</strong>
+              <p>Arihant Publications</p>
+            </div>
+          </div>
+          <div className="book-item">
+            <div>
+              <strong>Mathematics for NDA/NA</strong>
+              <p>R.S. Aggarwal</p>
+            </div>
+          </div>
+          <div className="book-item">
+            <div>
+              <strong>CDS Combined Defence Services Guide</strong>
+              <p>Kiran Prakashan</p>
+            </div>
+          </div>
+          <div className="book-item">
+            <div>
+              <strong>Lucent's General Knowledge</strong>
+              <p>Lucent Publication</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

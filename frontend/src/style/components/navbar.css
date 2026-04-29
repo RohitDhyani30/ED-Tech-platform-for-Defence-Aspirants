@@ -1,16 +1,26 @@
-/* Navbar Styles */
+/* ══════════════════════════════════════════════════════
+   NAVBAR — Home page public navbar
+   Portal/Admin navbars are in their respective layouts
+══════════════════════════════════════════════════════ */
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px 60px;
-  background: var(--bg-panel);
+  background: rgba(12, 19, 32, 0.9);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Logo ── */
+.logo-block {
+  display: flex;
+  align-items: center;
 }
 
 .logo-text {
@@ -28,12 +38,13 @@
 
 .logo-sub {
   font-family: var(--font-ui);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.35em;
   color: var(--text-muted);
   text-transform: uppercase;
 }
 
+/* ── Nav Links ── */
 .nav-links {
   display: flex;
   gap: 34px;
@@ -46,29 +57,29 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-muted);
-  transition: color 0.2s;
+  transition: color var(--t-base);
   position: relative;
 }
 
 .nav-links a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
   width: 0;
   height: 1px;
   background: var(--gold);
-  transition: width 0.25s;
+  transition: width var(--t-base);
 }
 
 .nav-links a:hover {
   color: var(--gold-light);
 }
-
 .nav-links a:hover::after {
   width: 100%;
 }
 
+/* ── Nav Actions ── */
 .nav-actions {
   display: flex;
   gap: 12px;
@@ -80,7 +91,6 @@
     padding: 12px 20px;
     flex-wrap: wrap;
   }
-  
   .nav-links {
     display: none;
   }

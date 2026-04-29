@@ -9,10 +9,7 @@ export default function PYQSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [pyqRes, subRes] = await Promise.all([
-          getPYQs(),
-          getSubjects()
-        ]);
+        const [pyqRes, subRes] = await Promise.all([getPYQs(), getSubjects()]);
         setPyqs(pyqRes.data || []);
         setSubjects(subRes.data || []);
       } catch (err) {
@@ -22,9 +19,10 @@ export default function PYQSection() {
     fetchData();
   }, []);
 
-  const filtered = selectedSubject === "all" 
-    ? pyqs 
-    : pyqs.filter(p => p.subject?.id === parseInt(selectedSubject));
+  const filtered =
+    selectedSubject === "all"
+      ? pyqs
+      : pyqs.filter((p) => p.subject?.id === parseInt(selectedSubject));
 
   return (
     <div className="aspirant-container">
@@ -34,24 +32,35 @@ export default function PYQSection() {
       </div>
 
       <div className="filter-section">
-        <select 
-          value={selectedSubject} 
+        <select
+          value={selectedSubject}
           onChange={(e) => setSelectedSubject(e.target.value)}
           className="filter-select"
         >
           <option value="all">All Subjects</option>
-          {subjects.map(s => (
-            <option key={s.id} value={s.id}>{s.name}</option>
+          {subjects.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
           ))}
         </select>
       </div>
 
       <div className="grid-auto">
-        {filtered.map(p => (
+        {filtered.map((p) => (
           <div key={p.id} className="resource-card">
-            <h3>{p.year} - {p.session}</h3>
-            <p className="resource-subject">Subject: {p.subjectName || p.subject?.name}</p>
-            <a href={p.pdfUrl} target="_blank" rel="noopener noreferrer" className="resource-link">
+            <h3>
+              {p.year} - {p.session}
+            </h3>
+            <p className="resource-subject">
+              Subject: {p.subjectName || p.subject?.name}
+            </p>
+            <a
+              href={p.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resource-link"
+            >
               Download PDF →
             </a>
           </div>

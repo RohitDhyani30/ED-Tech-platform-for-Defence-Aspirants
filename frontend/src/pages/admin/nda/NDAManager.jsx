@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  getSubjects, 
-  createSubject, 
+  getSubjects,
+  createSubject,
   deleteSubject,
-  getStudyResources, 
-  createStudyResource, 
+  getStudyResources,
+  createStudyResource,
   updateStudyResource,
-  deleteStudyResource
+  deleteStudyResource,
 } from "../../../services/ndaService";
 
 export default function NDAManager() {
@@ -14,7 +14,7 @@ export default function NDAManager() {
   const [resources, setResources] = useState([]);
   const [subjectName, setSubjectName] = useState("");
   const [editingResource, setEditingResource] = useState(null);
-  
+
   // Resource form state
   const [resourceTitle, setResourceTitle] = useState("");
   const [resourceUrl, setResourceUrl] = useState("");
@@ -26,7 +26,7 @@ export default function NDAManager() {
     try {
       const [sub, res] = await Promise.all([
         getSubjects(),
-        getStudyResources()
+        getStudyResources(),
       ]);
       setSubjects(sub.data || []);
       setResources(res.data || []);
@@ -39,7 +39,9 @@ export default function NDAManager() {
     }
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   // Subject CRUD
   const addSubject = async () => {
@@ -54,7 +56,10 @@ export default function NDAManager() {
   };
 
   const removeSubject = async (id) => {
-    if (!window.confirm("Delete subject? All linked resources will be orphaned.")) return;
+    if (
+      !window.confirm("Delete subject? All linked resources will be orphaned.")
+    )
+      return;
     try {
       await deleteSubject(id);
       loadData();
@@ -86,22 +91,24 @@ export default function NDAManager() {
       alert("Please select a subject");
       return;
     }
-    
+
     try {
-      const subjectObj = subjects.find(s => s.id === parseInt(selectedSubject));
+      const subjectObj = subjects.find(
+        (s) => s.id === parseInt(selectedSubject),
+      );
       if (!subjectObj) {
         alert("Selected subject not found");
         return;
       }
-      
+
       const payload = {
         title: resourceTitle,
         url: resourceUrl,
         description: resourceDescription,
         resourceType: resourceType,
-        subject: { id: subjectObj.id }
+        subject: { id: subjectObj.id },
       };
-      
+
       if (editingResource) {
         // Update existing resource
         console.log("Updating resource:", editingResource.id, payload);
@@ -111,10 +118,9 @@ export default function NDAManager() {
         console.log("Creating resource:", payload);
         await createStudyResource(payload);
       }
-      
+
       resetResourceForm();
       loadData();
-      
     } catch (err) {
       console.error("Save error:", err);
       alert(err.response?.data || "Failed to save resource");
@@ -141,7 +147,14 @@ export default function NDAManager() {
   };
 
   // Resource type options
-  const resourceTypes = ["PDF", "Video", "Website", "Document", "E-Book", "Lecture Notes"];
+  const resourceTypes = [
+    "PDF",
+    "Video",
+    "Website",
+    "Document",
+    "E-Book",
+    "Lecture Notes",
+  ];
 
   return (
     <div className="admin-page">
@@ -151,16 +164,18 @@ export default function NDAManager() {
       <div className="admin-section">
         <h3>📖 Manage Subjects</h3>
         <div className="flex-row">
-          <input 
-            className="admin-input" 
-            placeholder="Subject Name (e.g., Mathematics, GAT)" 
-            value={subjectName} 
-            onChange={(e) => setSubjectName(e.target.value)} 
+          <input
+            className="admin-input"
+            placeholder="Subject Name (e.g., Mathematics, GAT)"
+            value={subjectName}
+            onChange={(e) => setSubjectName(e.target.value)}
             style={{ flex: 1 }}
           />
-          <button className="btn btn-add" onClick={addSubject}>Add Subject</button>
+          <button className="btn btn-add" onClick={addSubject}>
+            Add Subject
+          </button>
         </div>
-        
+
         <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
@@ -171,17 +186,28 @@ export default function NDAManager() {
               </tr>
             </thead>
             <tbody>
-              {subjects.map(s => (
+              {subjects.map((s) => (
                 <tr key={s.id}>
                   <td>{s.id}</td>
-                  <td><strong>{s.name}</strong></td>
                   <td>
-                    <button className="btn btn-delete" onClick={() => removeSubject(s.id)}>Delete</button>
+                    <strong>{s.name}</strong>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => removeSubject(s.id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
               {subjects.length === 0 && (
-                <tr><td colSpan="3" style={{ textAlign: "center" }}>No subjects added yet</td></tr>
+                <tr>
+                  <td colSpan="3" style={{ textAlign: "center" }}>
+                    No subjects added yet
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
@@ -191,68 +217,84 @@ export default function NDAManager() {
       {/* ==================== RESOURCES SECTION ==================== */}
       <div className="admin-section">
         <h3>{editingResource ? "✏️ Edit Resource" : "➕ Add New Resource"}</h3>
-        
+
         <div className="admin-form-grid">
           {/* Title */}
           <div className="admin-field admin-field-span">
             <label>📌 Title *</label>
-            <input 
+            <input
               type="text"
               placeholder="e.g., Complete Mathematics Notes for NDA"
-              value={resourceTitle} 
-              onChange={(e) => setResourceTitle(e.target.value)} 
+              value={resourceTitle}
+              onChange={(e) => setResourceTitle(e.target.value)}
             />
           </div>
-          
+
           {/* URL */}
           <div className="admin-field admin-field-span">
             <label>🔗 URL / Link *</label>
-            <input 
+            <input
               type="url"
               placeholder="https://example.com/resource.pdf"
-              value={resourceUrl} 
-              onChange={(e) => setResourceUrl(e.target.value)} 
+              value={resourceUrl}
+              onChange={(e) => setResourceUrl(e.target.value)}
             />
           </div>
-          
+
           {/* Subject & Type - Row */}
           <div className="admin-field">
             <label>📚 Subject *</label>
-            <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
+            <select
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+            >
               <option value="">-- Select Subject --</option>
-              {subjects.map(s => (
-                <option key={s.id} value={s.id}>{s.name}</option>
+              {subjects.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
               ))}
             </select>
           </div>
-          
+
           <div className="admin-field">
             <label>📄 Resource Type</label>
-            <select value={resourceType} onChange={(e) => setResourceType(e.target.value)}>
-              {resourceTypes.map(type => (
-                <option key={type} value={type}>{type}</option>
+            <select
+              value={resourceType}
+              onChange={(e) => setResourceType(e.target.value)}
+            >
+              {resourceTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
               ))}
             </select>
           </div>
-          
+
           {/* Description */}
           <div className="admin-field admin-field-span">
             <label>💬 Description</label>
-            <textarea 
+            <textarea
               rows="3"
               placeholder="Brief description of the resource content..."
-              value={resourceDescription} 
-              onChange={(e) => setResourceDescription(e.target.value)} 
+              value={resourceDescription}
+              onChange={(e) => setResourceDescription(e.target.value)}
             />
           </div>
-          
+
           {/* Form Actions */}
           <div className="admin-form-actions">
-            <button className="admin-btn admin-btn-primary" onClick={addOrUpdateResource}>
+            <button
+              className="admin-btn admin-btn-primary"
+              onClick={addOrUpdateResource}
+            >
               {editingResource ? "Update Resource" : "Add Resource"}
             </button>
             {editingResource && (
-              <button className="admin-btn admin-btn-secondary" onClick={resetResourceForm}>
+              <button
+                className="admin-btn admin-btn-secondary"
+                onClick={resetResourceForm}
+              >
                 Cancel Edit
               </button>
             )}
@@ -275,31 +317,54 @@ export default function NDAManager() {
               </tr>
             </thead>
             <tbody>
-              {resources.map(r => (
+              {resources.map((r) => (
                 <tr key={r.id}>
                   <td>
                     <strong>{r.title}</strong>
                     <br />
                     <small>
-                      <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: "#d0a93f", fontSize: "11px" }}>
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#d0a93f", fontSize: "11px" }}
+                      >
                         🔗 {r.url?.substring(0, 50)}...
                       </a>
                     </small>
                   </td>
                   <td>{r.subjectName || r.subject?.name || "—"}</td>
-                  <td><span className="resource-badge">{r.resourceType || "—"}</span></td>
-                  <td className="admin-cell-muted">{r.description?.substring(0, 80)}...</td>
+                  <td>
+                    <span className="resource-badge">
+                      {r.resourceType || "—"}
+                    </span>
+                  </td>
+                  <td className="admin-cell-muted">
+                    {r.description?.substring(0, 80)}...
+                  </td>
                   <td>
                     <div className="admin-table-actions">
-                      <button className="btn btn-edit" onClick={() => editResource(r)}>Edit</button>
-                      <button className="btn btn-delete" onClick={() => removeResource(r.id, r.title)}>Delete</button>
+                      <button
+                        className="btn btn-edit"
+                        onClick={() => editResource(r)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-delete"
+                        onClick={() => removeResource(r.id, r.title)}
+                      >
+                        Delete
+                      </button>
                     </div>
-                   </td>
-                 </tr>
+                  </td>
+                </tr>
               ))}
               {resources.length === 0 && (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: "center" }}>No resources added yet. Create your first resource above!</td>
+                  <td colSpan="5" style={{ textAlign: "center" }}>
+                    No resources added yet. Create your first resource above!
+                  </td>
                 </tr>
               )}
             </tbody>
